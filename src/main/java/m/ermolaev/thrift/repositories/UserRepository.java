@@ -14,7 +14,7 @@ public class UserRepository {
     JdbcTemplate jdbcTemplate;
 
     public List<User> getAll() {
-        return jdbcTemplate.query("SELECT nickname, email, password FROM user",
+        return jdbcTemplate.query("SELECT nickname FROM user",
                 BeanPropertyRowMapper.newInstance(User.class));
     }
 
