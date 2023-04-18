@@ -105,6 +105,14 @@
       background-color: red;
     }
 
+<!--        /* Style for the span elements */-->
+<!--    .left {-->
+<!--      float: left;-->
+<!--    }-->
+<!--    .right {-->
+<!--      float: right;-->
+<!--    }-->
+
 	</style>
   <script>
 		// Function to toggle the profile pop-up
@@ -142,27 +150,27 @@
   </div>
 </div>
 <h1 th:text="${nickname} + ' groups'"/>
-<!-- Panel with title and list -->
+<!-- First group -->
 <div class="panel">
-  <h2>Current month</h2>
   <ul>
-    <li>
-      Coffee
-      <div class="progress-bar">
-        <div class="progress"></div>
-      </div>
+    <li style="display: flex; justify-content: space-between;">
+      <div>Family</div>
+      <div>4 members</div>
     </li>
-    <li>
-      Groceries
-      <div class="progress-bar">
-        <div class="progress"></div>
-      </div>
+    <li style="display: flex; justify-content: space-between;">
+      <div>No description</div>
     </li>
-    <li>
-      Gas
-      <div class="progress-bar">
-        <div class="progress"></div>
-      </div>
+  </ul>
+</div>
+<!-- Second group -->
+<div class="panel">
+  <ul>
+    <li style="display: flex; justify-content: space-between;">
+      <div>Dormitory gang ;)</div>
+      <div>12 members</div>
+    </li>
+    <li style="display: flex; justify-content: space-between;">
+      <div>The whole gang from DS-1!</div>
     </li>
   </ul>
 </div>

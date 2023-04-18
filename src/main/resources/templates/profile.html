@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <style>
+  <style>
 		/* Style for the header panel */
 		.header {
 			display: flex;
@@ -33,10 +33,6 @@
 		.header button img {
 			margin-right: 5px;
 		}
-
-		.currentPage {
-            background-color: #3366FF;
-        }
 
 		/* Style for the profile pop-up */
 		.popup {
@@ -107,26 +103,26 @@
       height: 100%;
       border-radius: 10px;
       background-color: red;
-      width: var(--progress-percent);
     }
 
 	</style>
-    <script>
+  <script>
 		// Function to toggle the profile pop-up
 		function togglePopup() {
 			var popup = document.getElementById("profile-popup");
 			popup.style.display = popup.style.display === "block" ? "none" : "block";
 		}
-		function redirectToGroups() {
-          let newUrl = window.location.href.replace("/wallets", "/groups");
+
+		function redirectToWallet() {
+          let newUrl = window.location.href.replace("/profile", "/wallets");
           window.location.href = newUrl;
         }
         function redirectToInvestments() {
-          let newUrl = window.location.href.replace("/wallets", "/investments");
+          let newUrl = window.location.href.replace("/profile", "/investments");
           window.location.href = newUrl;
         }
-        function redirectToProfile() {
-          let newUrl = window.location.href.replace("/wallets", "/profile");
+        function redirectToGroups() {
+          let newUrl = window.location.href.replace("/profile", "/groups");
           window.location.href = newUrl;
         }
 	</script>
@@ -134,44 +130,33 @@
 <body>
 <!-- Header panel with buttons -->
 <div class="header">
-    <!--    <img th:src="@{/icons/logo.png}" alt="Thrift">-->
-    <button class="currentPage"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
-    <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
-    <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
-    <button onclick="togglePopup()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
-    <div id="profile-popup" class="popup">
-        <button onclick="redirectToProfile()">View profile</button>
-        <button>Option 2</button>
-        <button>Option 3</button>
-    </div>
+  <!--    <img th:src="@{/icons/logo.png}" alt="Thrift">-->
+  <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+  <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
+  <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
+  <button onclick="togglePopup()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
+  <div id="profile-popup" class="popup">
+    <button>View profile</button>
+    <button>Option 2</button>
+    <button>Option 3</button>
+  </div>
 </div>
-<h1 th:text="${nickname} + ' wallets'"/>
+
 <!-- Panel with title and list -->
 <div class="panel">
-    <h2>Current month</h2>
-    <ul>
-        <li style="display: flex; justify-content: space-between;">
-            <div>Coffee</div>
-            <div>25/50$</div>
-        </li>
-        <div class="progress-bar">
-            <div class="progress" style="--progress-percent: 50%"></div>
-        </div>
-        <li style="display: flex; justify-content: space-between;">
-            <div>Groceries</div>
-            <div>100/300$</div>
-        </li>
-        <div class="progress-bar">
-            <div class="progress" style="--progress-percent: 33%"></div>
-        </div>
-        <li style="display: flex; justify-content: space-between;">
-            <div>Gas</div>
-            <div>0/100$</div>
-        </li>
-        <div class="progress-bar">
-            <div class="progress" style="--progress-percent: 0%"></div>
-        </div>
-    </ul>
+  <img th:src="@{/default_profile.png}" alt="profile image">
+  <h1 th:text="${nickname}"/>
+  <ul>
+    <li>
+      <button><img th:src="@{/icons/groups.png}" alt="New group">Create new group</button>
+    </li>
+    <li>
+      <button><img th:src="@{/icons/preferences.png}" alt="Preferences">Preferences</button>
+    </li>
+    <li>
+      <button><img th:src="@{/icons/log_out.png}" alt="Log out">Log out</button>
+    </li>
+  </ul>
 </div>
 </body>
 </html>

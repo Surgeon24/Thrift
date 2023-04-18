@@ -36,10 +36,18 @@ public class ThriftController {
         return "test";
     }
 
-    @RequestMapping(value = "{nickname}/profile")
-    @ResponseBody
-    public String profilePage(@PathVariable String nickname) {
-        return "This is the profile page of " + nickname;
+//    @RequestMapping(value = "{nickname}/profile")
+//    @ResponseBody
+//    public String profilePage(@PathVariable String nickname) {
+//        return "This is the profile page of " + nickname;
+//    }
+
+    @GetMapping("/{nickname}/profile")
+    public ModelAndView profilePage(@PathVariable String nickname) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("profile");
+        modelAndView.addObject("nickname", nickname);
+        return modelAndView;
     }
 
     @GetMapping("/{nickname}/wallets")
