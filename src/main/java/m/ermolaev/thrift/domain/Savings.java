@@ -9,11 +9,11 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Savings {
     private int id;
-    private String nickname;
-    private String email;
-    private String password_hash;
-    private String role;
+    private int user_id;
+    private String title;
+    private String description;
+    private int sum;
     private Timestamp created_at;
 }

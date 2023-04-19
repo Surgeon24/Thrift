@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 
-public class ThriftController {
+public class UserController {
     @Autowired
     UserRepository userRepository;
 
@@ -25,6 +25,19 @@ public class ThriftController {
     public String test(){
         return "test";
     }
+
+
+//    @GetMapping("/my-page")
+//    public String myPage() {
+//        Neo4jProperties.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+//            // user is not authenticated, redirect to login page
+//            return "redirect:/login";
+//        } else {
+//            // user is authenticated, display the page
+//            // code to display the page
+//        }
+//    }
 
     @GetMapping("/{nickname}/profile")
     public ModelAndView profilePage(@PathVariable String nickname) {
