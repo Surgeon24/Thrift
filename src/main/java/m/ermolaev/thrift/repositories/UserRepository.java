@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import java.util.List;
@@ -23,9 +25,9 @@ public class UserRepository {
 
     public User findByUsernameAndPassword(String username, String password) {
         try {
-//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//            String hashedPassword = passwordEncoder.encode(password);
-            String hashedPassword = password;
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(password);
+//            String hashedPassword = password;
             System.out.println("password: " + password);
             System.out.println("hashedpassword: " + hashedPassword);
             User user = jdbcTemplate.queryForObject("SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1",
@@ -38,9 +40,10 @@ public class UserRepository {
     }
 
     public void registerUser(String username, String password) throws Exception {
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String hashedPassword = passwordEncoder.encode(password);
-        String hashedPassword = password;
+        System.out.println("Trying to add user...");
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+//        String hashedPassword = password;
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, username);
         if (count > 0) {
@@ -48,6 +51,7 @@ public class UserRepository {
         }
 
         sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        System.out.println("User added!");
         jdbcTemplate.update(sql, username, hashedPassword);
     }
 
