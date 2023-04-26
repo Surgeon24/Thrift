@@ -1,0 +1,151 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Login Page</title>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <form action="/login" method="POST">-->
+<!--        <h1>Login</h1>-->
+<!--        <label for="username"><b>Username</b></label>-->
+<!--        <input type="text" id="username" placeholder="Enter Username" name="username" required>-->
+<!--        <label for="password"><b>Password</b></label>-->
+<!--        <input type="password" id="password" placeholder="Enter Password" name="password" required>-->
+<!--        <button type="submit">Login</button>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+          background-image: url('/background.png');
+          background-repeat: no-repeat;
+          background-size: cover;
+          font-family: Arial, sans-serif;
+          font-size: 16px;
+          line-height: 1.5;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Container styles */
+        .container {
+          max-width: 500px;
+          margin: 30px auto;
+          padding: 30px;
+          background-color: #ffffff;
+          border-radius: 10px;
+        }
+
+        /* Form styles */
+        form {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+        }
+
+        /* Label styles */
+        label {
+          margin-bottom: 10px;
+          padding: 5px;
+        }
+
+        /* Input styles */
+        input[type="text"],
+        input[type="password"] {
+          margin-bottom: 20px;
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #cccccc;
+          box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+          color: #cccccc;
+          font-size: 14px;
+        }
+
+        /* Button styles */
+        button[type="submit"] {
+          background-color: #4CAF50;
+          border: none;
+          color: white;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 5px;
+        }
+
+        button[type="submit"]:hover {
+          background-color: #3e8e41;
+        }
+
+        button[type="submit"]:active {
+          background-color: #3e8e41;
+          transform: translateY(1px);
+        }
+
+        button[type="submit"]:focus {
+          outline: none;
+        }
+
+        ul {
+          list-style: none;
+        }
+
+    </style>
+    <script>
+		function goRegister() {
+          let newUrl = window.location.href.replace("/login", "/register");
+          window.location.href = newUrl;
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <form action="/login" method="POST">
+        <ul>
+            <li>
+                <h1>Login</h1>
+            </li>
+            <li>
+                <label for="username"><b>Username</b></label>
+                <input type="text" id="username" placeholder="Enter Username" name="username" required>
+            </li>
+            <li>
+                <label for="password"><b>Password</b></label>
+                <input type="password" id="password" placeholder="Enter Password" name="password" required>
+            </li>
+            <li>
+                <button type="submit">Login</button>
+                <button onclick="goRegister()">Register</button>
+            </li>
+        </ul>
+    </form>
+</div>
+</body>
+</html>
