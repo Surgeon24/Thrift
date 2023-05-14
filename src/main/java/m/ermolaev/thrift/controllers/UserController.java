@@ -1,5 +1,9 @@
 package m.ermolaev.thrift.controllers;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.servlet.http.HttpSession;
 import m.ermolaev.thrift.domain.User;
 import m.ermolaev.thrift.repositories.UserRepository;
@@ -28,18 +32,6 @@ public class UserController {
     }
 
 
-//    @GetMapping("/my-page")
-//    public String myPage() {
-//        Neo4jProperties.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-//            // user is not authenticated, redirect to login page
-//            return "redirect:/login";
-//        } else {
-//            // user is authenticated, display the page
-//            // code to display the page
-//        }
-//    }
-
     @GetMapping("/login")
     public ModelAndView showLoginPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -47,8 +39,18 @@ public class UserController {
         return modelAndView;
     }
 
+
     @PostMapping("/login")
-    public ModelAndView login(@RequestParam String username, @RequestParam String password, HttpSession session) {
+    @ApiOperation(value = "Login to the app", notes = "notes...")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not found")
+    })
+    public ModelAndView login(@ApiParam(value = "THis is a username", required = true)
+                                  @RequestParam String username, @RequestParam String password, HttpSession session) {
         // Authenticate the user here
         User user = userRepository.findByUsernameAndPassword(username, password);
         if(user != null){
@@ -85,16 +87,6 @@ public class UserController {
         }
         return modelAndView;
     }
-
-//    @PostMapping("/login")
-//    public ModelAndView login(@RequestParam String username, @RequestParam String password) {
-//        // Authenticate the user here
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("username", username);
-//        modelAndView.setViewName("redirect:/{username}/wallets");
-//        return modelAndView;
-//    }
-
 
     @GetMapping("/{nickname}/profile")
     public ModelAndView profilePage(@PathVariable String nickname) {

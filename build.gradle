@@ -32,6 +32,10 @@ dependencies {
 	//hibernate
 	implementation 'org.hibernate:hibernate-core:6.1.7.Final'
 
+	//swagger
+	implementation "io.springfox:springfox-swagger2:3.0.0"
+	implementation "io.springfox:springfox-swagger-ui:3.0.0"
+
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
