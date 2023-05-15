@@ -35,9 +35,7 @@ public class UserController {
     public ModelAndView login(@RequestParam String username, @RequestParam String password, HttpSession session) {
         // Authenticate the user here
         User user = userRepository.findByUsernameAndPassword(username, password);
-        System.out.println("1\n");
         if(user != null){
-            System.out.println("2\n");
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             SecurityContextHolder.getContext().setAuthentication(auth);
             ModelAndView modelAndView = new ModelAndView();
@@ -45,7 +43,6 @@ public class UserController {
             modelAndView.setViewName("redirect:/{username}/wallets");
             return modelAndView;
         } else {
-            System.out.println("3\n");
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("error", "Invalid username or password");
             modelAndView.setViewName("redirect:/login");
