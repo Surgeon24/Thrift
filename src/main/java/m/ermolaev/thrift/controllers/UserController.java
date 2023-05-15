@@ -5,6 +5,7 @@ import m.ermolaev.thrift.domain.User;
 import m.ermolaev.thrift.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.Authentication;
@@ -33,7 +34,7 @@ public class UserController {
 
     @PostMapping(value = "login", produces = "application/json")
     public ModelAndView login(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        // Authenticate the user here
+        System.out.println("method login POST is running...");
         User user = userRepository.findByUsernameAndPassword(username, password);
         if(user != null){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -59,7 +60,7 @@ public class UserController {
 
     @PostMapping(value = "register", produces = "application/json")
     public ModelAndView register(@RequestParam String username, @RequestParam String password) {
-        System.out.println("method POST is running...");
+        System.out.println("method register POST is running...");
         ModelAndView modelAndView = new ModelAndView();
         try {
             userRepository.registerUser(username, password);
