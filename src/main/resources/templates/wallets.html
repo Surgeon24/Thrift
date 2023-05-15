@@ -148,30 +148,73 @@
 <h1 th:text="${nickname} + ' wallets'"/>
 <!-- Panel with title and list -->
 <div class="panel">
-    <h2>Current month</h2>
-    <ul>
-        <li style="display: flex; justify-content: space-between;">
-            <div>Coffee</div>
-            <div>25/50$</div>
-        </li>
-        <div class="progress-bar">
-            <div class="progress" style="--progress-percent: 50%"></div>
+    <!-- Iterate over wallets list and create a panel for each wallet -->
+    <div th:each="wallet, walletIndex : ${wallets}" class="panel">
+        <div th:if="${walletIndex.index < wallet_expenses.size()}" th:with="expenses=${wallet_expenses[walletIndex.index]}">
+            <li style="display: flex; justify-content: space-between;">
+                <div th:text="${wallet.title}"></div>
+<!--                <div th:text="${'1000' + '/' + '10000' + '$'}"+></div>-->
+            </li>
+            <div th:each="expense : ${expenses}" class="panel">
+                <li style="display: flex; justify-content: space-between;">
+                    <div th:text="${expense.title}"></div>
+                    <div th:text="${expense.current_sum + '/' + expense.limit_sum + '$'}"+></div>
+                </li>
+                <div class="progress-bar">
+                    <div class="progress" th:style="'--progress-percent: ' + ${expense.current_sum * 100 / expense.limit_sum} + '%'"></div>
+                </div>
+            </div>
         </div>
-        <li style="display: flex; justify-content: space-between;">
-            <div>Groceries</div>
-            <div>100/300$</div>
-        </li>
-        <div class="progress-bar">
-            <div class="progress" style="--progress-percent: 33%"></div>
-        </div>
-        <li style="display: flex; justify-content: space-between;">
-            <div>Gas</div>
-            <div>0/100$</div>
-        </li>
-        <div class="progress-bar">
-            <div class="progress" style="--progress-percent: 0%"></div>
-        </div>
-    </ul>
+    </div>
 </div>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<body>-->
+<!--&lt;!&ndash; Header panel with buttons &ndash;&gt;-->
+<!--<h1 th:text="${nickname} + ' wallets'"/>-->
+<!--&lt;!&ndash; Panel with title and list &ndash;&gt;-->
+<!--<div class="panel">-->
+<!--    <h2>Current month</h2>-->
+<!--    <ul>-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div>Coffee</div>-->
+<!--            <div>25/50$</div>-->
+<!--        </li>-->
+<!--        <div class="progress-bar">-->
+<!--            <div class="progress" style="&#45;&#45;progress-percent: 50%"></div>-->
+<!--        </div>-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div>Groceries</div>-->
+<!--            <div>100/300$</div>-->
+<!--        </li>-->
+<!--        <div class="progress-bar">-->
+<!--            <div class="progress" style="&#45;&#45;progress-percent: 33%"></div>-->
+<!--        </div>-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div>Gas</div>-->
+<!--            <div>0/100$</div>-->
+<!--        </li>-->
+<!--        <div class="progress-bar">-->
+<!--            <div class="progress" style="&#45;&#45;progress-percent: 0%"></div>-->
+<!--        </div>-->
+<!--    </ul>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

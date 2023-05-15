@@ -1,6 +1,8 @@
 package m.ermolaev.thrift.repositories;
 
+import m.ermolaev.thrift.domain.Group;
 import m.ermolaev.thrift.domain.User;
+import m.ermolaev.thrift.domain.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -52,6 +54,23 @@ public class UserRepository {
 
         sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         jdbcTemplate.update(sql, username, hashedPassword);
+    }
+
+    public User getUser(String nickname){
+        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE username = ? LIMIT 1",
+                new Object[]{nickname},
+                BeanPropertyRowMapper.newInstance(User.class));
+    }
+
+//    public List<Group> getAllGroups(String nickname){
+//        return jdbcTemplate.query("SELECT title, description FROM group WHERE group.id")
+//    }
+
+        public List<Wallet> getAllWallets(String nickname){
+            User user = getUser(nickname);
+            return jdbcTemplate.query("SELECT * FROM wallet WHERE wallet.user_id = ?",
+                    new Object[]{user.getId()},
+                    BeanPropertyRowMapper.newInstance(Wallet.class));
     }
 
 

@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @RestController
-
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -97,22 +96,22 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/{nickname}/wallets")
-    public ModelAndView walletsPage(@PathVariable String nickname) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("wallets");
-        modelAndView.addObject("nickname", nickname);
-        return modelAndView;
-    }
+//    @GetMapping("/{nickname}/wallets")
+//    public ModelAndView walletsPage(@PathVariable String nickname) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("wallets");
+//        modelAndView.addObject("nickname", nickname);
+//        return modelAndView;
+//    }
 
 
-    @GetMapping("/{nickname}/groups")
-    public ModelAndView groupsPage(@PathVariable String nickname) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("groups");
-        modelAndView.addObject("nickname", nickname);
-        return modelAndView;
-    }
+//    @GetMapping("/{nickname}/groups")
+//    public ModelAndView groupsPage(@PathVariable String nickname) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("groups");
+//        modelAndView.addObject("nickname", nickname);
+//        return modelAndView;
+//    }
 
     @GetMapping("/{nickname}/investments")
     public ModelAndView investmentsPage(@PathVariable String nickname) {

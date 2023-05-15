@@ -11,6 +11,6 @@ public class Wallet_expense {
     private int id;
     private String title;
     private int current_sum;
-    private int limit;
+    private int limit_sum;
     private int wallet_id;
 }
