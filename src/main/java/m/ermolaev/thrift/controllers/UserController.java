@@ -59,9 +59,10 @@ public class UserController {
             modelAndView.setViewName("redirect:/{username}/wallets");
             return modelAndView;
         } else {
+            System.out.println("USER NOT FOUND!");
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("error", "Invalid username or password");
-            modelAndView.setViewName("login");
+            modelAndView.setViewName("redirect:/login");
             return modelAndView;
         }
     }
@@ -74,10 +75,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@RequestParam String username, @RequestParam String password) {
+    public ModelAndView register(@RequestParam String username, @RequestParam String password, @RequestParam String confirm_password) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            userRepository.registerUser(username, password);
+            userRepository.registerUser(username, password, confirm_password);
             modelAndView.addObject("success", "User registered successfully");
             modelAndView.addObject("username", username);
             modelAndView.setViewName("redirect:/{username}/wallets");

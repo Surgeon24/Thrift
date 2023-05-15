@@ -37,7 +37,10 @@ public class UserRepository {
         }
     }
 
-    public void registerUser(String username, String password) throws Exception {
+    public void registerUser(String username, String password, String confirm_password) throws Exception {
+        if (!password.equals(confirm_password)){
+            throw new Exception("Passwords are not matched.");
+        }
 //        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //        String hashedPassword = passwordEncoder.encode(password);
         String hashedPassword = password;
