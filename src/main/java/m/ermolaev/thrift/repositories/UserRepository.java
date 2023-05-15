@@ -24,12 +24,14 @@ public class UserRepository {
     }
 
     public User findByUsernameAndPassword(String username, String password) {
+        System.out.println("4\n");
         try {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(password);
-//            String hashedPassword = password;
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            String hashedPassword = passwordEncoder.encode(password);
+            String hashedPassword = password;
             System.out.println("password: " + password);
             System.out.println("hashedpassword: " + hashedPassword);
+            System.out.println("5\n");
             User user = jdbcTemplate.queryForObject("SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1",
                     new Object[]{username, hashedPassword},
                     BeanPropertyRowMapper.newInstance(User.class));
@@ -41,9 +43,9 @@ public class UserRepository {
 
     public void registerUser(String username, String password) throws Exception {
         System.out.println("Trying to add user...");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-//        String hashedPassword = password;
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String hashedPassword = passwordEncoder.encode(password);
+        String hashedPassword = password;
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, username);
         if (count > 0) {
