@@ -14,6 +14,6 @@ public class Savings {
     private int user_id;
     private String title;
     private String description;
-    private int sum;
+    private int amount;
     private Timestamp created_at;
 }

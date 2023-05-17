@@ -62,9 +62,12 @@ public class UserRepository {
                 BeanPropertyRowMapper.newInstance(User.class));
     }
 
-//    public List<Group> getAllGroups(String nickname){
-//        return jdbcTemplate.query("SELECT title, description FROM group WHERE group.id")
-//    }
+    public List<Group> getAllGroups(String nickname){
+        User user = getUser(nickname);
+        return jdbcTemplate.query("SELECT * FROM group_table WHERE group_table.id IN (SELECT group_id FROM group_user WHERE user_id = ?)",
+                    new Object[]{user.getId()},
+                    BeanPropertyRowMapper.newInstance(Group.class));
+    }
 
         public List<Wallet> getAllWallets(String nickname){
             User user = getUser(nickname);

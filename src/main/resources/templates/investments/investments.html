@@ -29,6 +29,10 @@
             background-color: #3366FF;
         }
 
+        .list div:hover {
+            background-color: #BBBBBB;
+        }
+
 		/* Style for the icon in the header panel buttons */
 		.header button img {
 			margin-right: 5px;
@@ -125,46 +129,37 @@
           let newUrl = window.location.href.replace("/investments", "/profile");
           window.location.href = newUrl;
         }
+        function redirectToInvestment(id) {
+          let str = "/investment/" + id;
+          let newUrl = window.location.href.replace("/investments", str);
+          window.location.href = newUrl;
+        }
+
 	</script>
 </head>
 <body>
 <!-- Header panel with buttons -->
 <div class="header">
-  <!--    <img th:src="@{/icons/logo.png}" alt="Thrift">-->
+  <div style="width: 20%; height: auto;">
+    <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
+  </div>
   <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
   <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
   <button><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
-  <button onclick="togglePopup()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
-  <div id="profile-popup" class="popup">
-    <button onclick="redirectToProfile()">View profile</button>
-    <button>Option 2</button>
-    <button>Option 3</button>
+  <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
+</div>
+<h1 th:text="${username} + ' investments'"/>
+  <div class="list" th:each="instrument : ${instruments}">
+    <div class="panel" th:onclick="'redirectToInvestment(\'' + ${instrument.id} + '\')'">
+    <li style="display: flex; justify-content: space-between;">
+        <div th:text="${instrument.title}"></div>
+        <div th:text="${instrument.amount + ' $'}"></div>
+    </li>
+    <li style="display: flex; justify-content: space-between;">
+      <div th:text="${instrument.description}"></div>
+    </li>
+    </div>
   </div>
-</div>
-<h1 th:text="${nickname} + ' investments'"/>
-<!-- First group -->
-<div class="panel">
-  <ul>
-    <li style="display: flex; justify-content: space-between;">
-      <div>Bank savings account</div>
-      <div>1000$</div>
-    </li>
-    <li style="display: flex; justify-content: space-between;">
-      <div>No description</div>
-    </li>
-  </ul>
-</div>
-<!-- Second group -->
-<div class="panel">
-  <ul>
-    <li style="display: flex; justify-content: space-between;">
-      <div>Stocks</div>
-      <div>867$</div>
-    </li>
-    <li style="display: flex; justify-content: space-between;">
-      <div>Money invested in stocks on nasdaq.com</div>
-    </li>
-  </ul>
-</div>
+
 </body>
 </html>

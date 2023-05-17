@@ -29,10 +29,18 @@
             background-color: #3366FF;
         }
 
+        .list div:hover {
+            background-color: #BBBBBB;
+        }
+
 		/* Style for the icon in the header panel buttons */
 		.header button img {
 			margin-right: 5px;
 		}
+
+		.currentPage {
+            background-color: #3366FF;
+        }
 
 		/* Style for the profile pop-up */
 		.popup {
@@ -103,6 +111,7 @@
       height: 100%;
       border-radius: 10px;
       background-color: red;
+      width: var(--progress-percent);
     }
 
 	</style>
@@ -112,29 +121,20 @@
 			var popup = document.getElementById("profile-popup");
 			popup.style.display = popup.style.display === "block" ? "none" : "block";
 		}
-
-		function redirectToWallet() {
-          let newUrl = window.location.href.replace("/profile", "/wallets");
+		function redirectToWallets() {
+          let newUrl = window.location.href.replace("/new_wallet", "/wallets");
+          window.location.href = newUrl;
+        }
+		function redirectToGroups() {
+          let newUrl = window.location.href.replace("/new_wallet", "/groups");
           window.location.href = newUrl;
         }
         function redirectToInvestments() {
-          let newUrl = window.location.href.replace("/profile", "/investments");
+          let newUrl = window.location.href.replace("/new_wallet", "/investments");
           window.location.href = newUrl;
         }
-        function redirectToGroups() {
-          let newUrl = window.location.href.replace("/profile", "/groups");
-          window.location.href = newUrl;
-        }
-        function redirectToCreateInvestment() {
-          let newUrl = window.location.href.replace("/profile", "/new_investment");
-          window.location.href = newUrl;
-        }
-        function redirectToCreateWallet() {
-          let newUrl = window.location.href.replace("/profile", "/new_wallet");
-          window.location.href = newUrl;
-        }
-        function redirectToCreateGroup() {
-          let newUrl = window.location.href.replace("/profile", "/new_group");
+        function redirectToProfile() {
+          let newUrl = window.location.href.replace("/new_wallet", "/profile");
           window.location.href = newUrl;
         }
 	</script>
@@ -145,29 +145,32 @@
   <div style="width: 20%; height: auto;">
     <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
   </div>
-  <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+  <button class="currentPage"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
   <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
   <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
   <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
-<!--  <button onclick="togglePopup()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>-->
-<!--  <div id="profile-popup" class="popup">-->
-<!--    <button>View profile</button>-->
-<!--    <button>Option 2</button>-->
-<!--    <button>Option 3</button>-->
-<!--  </div>-->
+</div>
+<h1 th:text="${username} + ' wallets'"/>
+<!-- Panel with title and list -->
+<form th:action="@{'/' + ${username} + '/new_wallet'}" method="POST">
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+  <div>
+    <label for="time_period">Time period:</label>
+    <select id="time_period" name="time_period" required>
+      <option value="year">Year</option>
+      <option value="month">Month</option>
+      <option value="week">Week</option>
+    </select>
+  </div>
+  <div>
+    <input type="submit" value="Submit">
+  </div>
+</form>
 </div>
 
-<!-- Panel with title and list -->
-<div class="panel">
-  <img th:src="@{/default_profile.png}" alt="profile image">
-  <h1 th:text="${username}"/>
-  <ul>
-      <button onclick="redirectToCreateWallet()"><img th:src="@{/icons/wallet.png}" alt="New group">New wallet</button>
-      <button onclick="redirectToCreateGroup()"><img th:src="@{/icons/groups.png}" alt="New group">New group</button>
-      <button onclick="redirectToCreateInvestment()"><img th:src="@{/icons/investments.png}" alt="New group">New investment</button>
-      <button><img th:src="@{/icons/preferences.png}" alt="Preferences">Preferences</button>
-      <button><img th:src="@{/icons/log_out.png}" alt="Log out">Log out</button>
-  </ul>
-</div>
+
 </body>
 </html>

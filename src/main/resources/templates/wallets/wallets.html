@@ -29,6 +29,10 @@
             background-color: #3366FF;
         }
 
+<!--        .list div:hover {-->
+<!--            background-color: #BBBBBB;-->
+<!--        }-->
+
 		/* Style for the icon in the header panel buttons */
 		.header button img {
 			margin-right: 5px;
@@ -134,25 +138,21 @@
 <body>
 <!-- Header panel with buttons -->
 <div class="header">
-    <!--    <img th:src="@{/icons/logo.png}" alt="Thrift">-->
+    <div style="width: 20%; height: auto;">
+        <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
+    </div>
     <button class="currentPage"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
     <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
     <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
-    <button onclick="togglePopup()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
-    <div id="profile-popup" class="popup">
-        <button onclick="redirectToProfile()">View profile</button>
-        <button>Option 2</button>
-        <button>Option 3</button>
-    </div>
+    <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 </div>
-<h1 th:text="${nickname} + ' wallets'"/>
+<h1 th:text="${username} + ' wallets'"/>
 <!-- Panel with title and list -->
-<div class="panel">
-    <!-- Iterate over wallets list and create a panel for each wallet -->
-    <div th:each="wallet, walletIndex : ${wallets}" class="panel">
+    <div class="list" th:each="wallet, walletIndex : ${wallets}">
+        <div class="panel" onclick="redirectToWallet()">
         <div th:if="${walletIndex.index < wallet_expenses.size()}" th:with="expenses=${wallet_expenses[walletIndex.index]}">
             <li style="display: flex; justify-content: space-between;">
-                <div th:text="${wallet.title}"></div>
+                <strong th:text="${wallet.title}"></strong>
 <!--                <div th:text="${'1000' + '/' + '10000' + '$'}"+></div>-->
             </li>
             <div th:each="expense : ${expenses}" class="panel">
@@ -161,12 +161,13 @@
                     <div th:text="${expense.current_sum + '/' + expense.limit_sum + '$'}"+></div>
                 </li>
                 <div class="progress-bar">
-                    <div class="progress" th:style="'--progress-percent: ' + ${expense.current_sum * 100 / expense.limit_sum} + '%'"></div>
+                    <div class="progress" th:style="'--progress-percent: ' + (${expense.current_sum * 100 / expense.limit_sum} > 100 ? '100' : ${expense.current_sum * 100 / expense.limit_sum}) + '%'"></div>
                 </div>
             </div>
         </div>
+        </div>
     </div>
-</div>
+
 
 </body>
 </html>
@@ -188,7 +189,7 @@
 
 <!--<body>-->
 <!--&lt;!&ndash; Header panel with buttons &ndash;&gt;-->
-<!--<h1 th:text="${nickname} + ' wallets'"/>-->
+<!--<h1 th:text="${username} + ' wallets'"/>-->
 <!--&lt;!&ndash; Panel with title and list &ndash;&gt;-->
 <!--<div class="panel">-->
 <!--    <h2>Current month</h2>-->
