@@ -14,8 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @RestController
-
-public class UserController {
+public class AuthenticationController {
     @Autowired
     UserRepository userRepository;
 
@@ -23,12 +22,6 @@ public class UserController {
     @ResponseBody
     public List<User> getAll(){
         return userRepository.getAll();
-    }
-
-    @GetMapping("test")
-    @ResponseBody
-    public String test(){
-        return "test";
     }
 
 
@@ -49,9 +42,8 @@ public class UserController {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not found")
     })
-    public ModelAndView login(@ApiParam(value = "THis is a username", required = true)
+    public ModelAndView login(@ApiParam(value = "This is a username", required = true)
                                   @RequestParam String username, @RequestParam String password, HttpSession session) {
-        // Authenticate the user here
         User user = userRepository.findByUsernameAndPassword(username, password);
         if(user != null){
             ModelAndView modelAndView = new ModelAndView();
@@ -86,39 +78,6 @@ public class UserController {
             modelAndView.addObject("error", e.getMessage());
             modelAndView.setViewName("redirect:/register");
         }
-        return modelAndView;
-    }
-
-    @GetMapping("/{nickname}/profile")
-    public ModelAndView profilePage(@PathVariable String nickname) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("profile");
-        modelAndView.addObject("nickname", nickname);
-        return modelAndView;
-    }
-
-    @GetMapping("/{nickname}/wallets")
-    public ModelAndView walletsPage(@PathVariable String nickname) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("wallets");
-        modelAndView.addObject("nickname", nickname);
-        return modelAndView;
-    }
-
-
-    @GetMapping("/{nickname}/groups")
-    public ModelAndView groupsPage(@PathVariable String nickname) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("groups");
-        modelAndView.addObject("nickname", nickname);
-        return modelAndView;
-    }
-
-    @GetMapping("/{nickname}/investments")
-    public ModelAndView investmentsPage(@PathVariable String nickname) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("investments");
-        modelAndView.addObject("nickname", nickname);
         return modelAndView;
     }
 }

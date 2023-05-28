@@ -29,6 +29,10 @@
             background-color: #3366FF;
         }
 
+		.list div:hover {
+            background-color: #BBBBBB;
+        }
+
 		/* Style for the icon in the header panel buttons */
 		.header button img {
 			margin-right: 5px;
@@ -105,6 +109,14 @@
       background-color: red;
     }
 
+<!--        /* Style for the span elements */-->
+<!--    .left {-->
+<!--      float: left;-->
+<!--    }-->
+<!--    .right {-->
+<!--      float: right;-->
+<!--    }-->
+
 	</style>
   <script>
 		// Function to toggle the profile pop-up
@@ -114,27 +126,20 @@
 		}
 
 		function redirectToWallet() {
-          let newUrl = window.location.href.replace("/profile", "/wallets");
+          let newUrl = window.location.href.replace("/groups", "/wallets");
           window.location.href = newUrl;
         }
         function redirectToInvestments() {
-          let newUrl = window.location.href.replace("/profile", "/investments");
+          let newUrl = window.location.href.replace("/groups", "/investments");
           window.location.href = newUrl;
         }
-        function redirectToGroups() {
-          let newUrl = window.location.href.replace("/profile", "/groups");
+        function redirectToProfile() {
+          let newUrl = window.location.href.replace("/groups", "/profile");
           window.location.href = newUrl;
         }
-        function redirectToCreateInvestment() {
-          let newUrl = window.location.href.replace("/profile", "/new_investment");
-          window.location.href = newUrl;
-        }
-        function redirectToCreateWallet() {
-          let newUrl = window.location.href.replace("/profile", "/new_wallet");
-          window.location.href = newUrl;
-        }
-        function redirectToCreateGroup() {
-          let newUrl = window.location.href.replace("/profile", "/new_group");
+        function redirectToGroup(id) {
+          let str = "/group/" + id;
+          let newUrl = window.location.href.replace("/groups", str);
           window.location.href = newUrl;
         }
 	</script>
@@ -146,28 +151,31 @@
     <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
   </div>
   <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
-  <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
+  <button><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
   <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
   <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 <!--  <button onclick="togglePopup()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>-->
 <!--  <div id="profile-popup" class="popup">-->
-<!--    <button>View profile</button>-->
+<!--    <button onclick="redirectToProfile()">View profile</button>-->
 <!--    <button>Option 2</button>-->
-<!--    <button>Option 3</button>-->
+<!--    <button>Log out</button>-->
 <!--  </div>-->
 </div>
-
-<!-- Panel with title and list -->
-<div class="panel">
-  <img th:src="@{/default_profile.png}" alt="profile image">
-  <h1 th:text="${username}"/>
-  <ul>
-      <button onclick="redirectToCreateWallet()"><img th:src="@{/icons/wallet.png}" alt="New group">New wallet</button>
-      <button onclick="redirectToCreateGroup()"><img th:src="@{/icons/groups.png}" alt="New group">New group</button>
-      <button onclick="redirectToCreateInvestment()"><img th:src="@{/icons/investments.png}" alt="New group">New investment</button>
-      <button><img th:src="@{/icons/preferences.png}" alt="Preferences">Preferences</button>
-      <button><img th:src="@{/icons/log_out.png}" alt="Log out">Log out</button>
-  </ul>
-</div>
+<h1 th:text="${username} + ' groups'"/>
+  <div class="list" th:each="group, groupIndex : ${groups}">
+    <div class="panel" th:onclick="'redirectToGroup(\'' + ${group.id} + '\')'">
+    <div th:if="${groupIndex.index < members.size()}" th:with="number=${members[groupIndex.index]}">
+    <ul>
+      <li style="display: flex; justify-content: space-between;">
+        <strong th:text="${group.title}"></strong>
+        <strong th:text="${number + ' member(s)'}"></strong>
+      </li>
+      <li style="display: flex; justify-content: space-between;">
+        <div th:text="${group.description}"></div>
+      </li>
+    </ul>
+    </div>
+    </div>
+  </div>
 </body>
 </html>

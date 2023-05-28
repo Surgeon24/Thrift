@@ -16,9 +16,7 @@ public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String title;
-
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('DAY', 'WEEK', 'MONTH', 'YEAR')")
     private Period time_period;
