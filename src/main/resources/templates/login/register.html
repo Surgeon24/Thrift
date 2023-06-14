@@ -96,6 +96,12 @@
         }
 
     </style>
+  <script>
+		function goLogin() {
+          let newUrl = window.location.href.replace("/register", "/login");
+          window.location.href = newUrl;
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -118,6 +124,7 @@
       </li>
       <li>
         <button type="submit">Register</button>
+        <button onclick="goLogin()">Login</button>
       </li>
     </ul>
   </form>
