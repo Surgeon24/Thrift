@@ -133,6 +133,11 @@
           let newUrl = window.location.href.replace("/wallets", "/profile");
           window.location.href = newUrl;
         }
+        function redirectToWallet(id) {
+          let str = "/wallet/" + id;
+          let newUrl = window.location.href.replace("/wallets", str);
+          window.location.href = newUrl;
+        }
 	</script>
 </head>
 <body>
@@ -149,11 +154,17 @@
 <h1 th:text="${username} + ' wallets'"/>
 <!-- Panel with title and list -->
     <div class="list" th:each="wallet, walletIndex : ${wallets}">
-        <div class="panel" onclick="redirectToWallet()">
+        <div class="panel">
         <div th:if="${walletIndex.index < wallet_expenses.size()}" th:with="expenses=${wallet_expenses[walletIndex.index]}">
             <li style="display: flex; justify-content: space-between;">
-                <strong th:text="${wallet.title}"></strong>
-<!--                <div th:text="${'1000' + '/' + '10000' + '$'}"+></div>-->
+                <div>
+                    <strong th:text="${wallet.title}"></strong>
+                    <button th:onclick="'redirectToWallet(' + ${wallet.id} + ')'">
+                        <img th:src="@{/icons/preferences.png}" alt="edit" style="width: auto; height: 1em;">
+                    </button>
+                </div>
+                <strong th:text="${spends[__${walletIndex.index}__]} + '/' + ${limits[__${walletIndex.index}__]}"></strong>
+                <!--                <div th:text="${'1000' + '/' + '10000' + '$'}"+></div>-->
             </li>
             <div th:each="expense : ${expenses}" class="panel">
                 <li style="display: flex; justify-content: space-between;">

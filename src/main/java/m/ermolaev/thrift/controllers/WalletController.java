@@ -30,10 +30,17 @@ public class WalletController {
         List<Wallet> wallets = userRepository.getAllWallets(username);
         modelAndView.addObject("wallets", wallets);
         List<List<Wallet_expense>> wallet_expenses = new ArrayList<>();
+        List<Integer> spends = new ArrayList<>();
+        List<Integer> limits = new ArrayList<>();
         for (Wallet wallet : wallets) {
             wallet_expenses.add(walletRepository.getAllExpenses(wallet.getId()));
+            spends.add(walletRepository.getSpends(walletRepository.getAllExpenses(wallet.getId())));
+            limits.add(walletRepository.getLimits(walletRepository.getAllExpenses(wallet.getId())));
+
         }
         modelAndView.addObject("wallet_expenses", wallet_expenses);
+        modelAndView.addObject("spends", spends);
+        modelAndView.addObject("limits", limits);
         return modelAndView;
     }
 

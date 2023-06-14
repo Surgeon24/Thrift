@@ -13,4 +13,12 @@ public class Wallet_expense {
     private int current_sum;
     private int limit_sum;
     private int wallet_id;
+
+    public Integer getCurrentSum(){
+        return current_sum;
+    }
+
+    public Integer getLimit(){
+        return limit_sum;
+    }
 }

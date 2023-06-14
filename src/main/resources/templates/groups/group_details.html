@@ -122,19 +122,27 @@
 			popup.style.display = popup.style.display === "block" ? "none" : "block";
 		}
 		function redirectToWallets() {
-          let newUrl = window.location.href.replace("/group", "/wallets");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/wallets";
           window.location.href = newUrl;
         }
 		function redirectToGroups() {
-          let newUrl = window.location.href.replace("/group", "/groups");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/groups";
           window.location.href = newUrl;
         }
         function redirectToInvestments() {
-          let newUrl = window.location.href.replace("/group", "/investments");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/investments";
           window.location.href = newUrl;
         }
         function redirectToProfile() {
-          let newUrl = window.location.href.replace("/group", "/profile");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/profile";
           window.location.href = newUrl;
         }
 	</script>
