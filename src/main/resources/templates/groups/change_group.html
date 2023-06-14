@@ -29,14 +29,18 @@
             background-color: #3366FF;
         }
 
-        .list div:hover {
-            background-color: #BBBBBB;
-        }
+<!--        .list div:hover {-->
+<!--            background-color: #BBBBBB;-->
+<!--        }-->
 
 		/* Style for the icon in the header panel buttons */
 		.header button img {
 			margin-right: 5px;
 		}
+
+		.currentPage {
+            background-color: #3366FF;
+        }
 
 		/* Style for the profile pop-up */
 		.popup {
@@ -107,6 +111,7 @@
       height: 100%;
       border-radius: 10px;
       background-color: red;
+      width: var(--progress-percent);
     }
 
 	</style>
@@ -116,28 +121,32 @@
 			var popup = document.getElementById("profile-popup");
 			popup.style.display = popup.style.display === "block" ? "none" : "block";
 		}
-        function redirectToWallet() {
+		function redirectToWallets() {
           let currentUrl = window.location.href;
-          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/change_group"));
           let newUrl = baseUrl + "/wallets";
           window.location.href = newUrl;
         }
-        function redirectToGroups() {
+		function redirectToGroups() {
           let currentUrl = window.location.href;
-          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/change_group"));
           let newUrl = baseUrl + "/groups";
           window.location.href = newUrl;
         }
         function redirectToInvestments() {
           let currentUrl = window.location.href;
-          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/change_group"));
           let newUrl = baseUrl + "/investments";
           window.location.href = newUrl;
         }
         function redirectToProfile() {
           let currentUrl = window.location.href;
-          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/change_group"));
           let newUrl = baseUrl + "/profile";
+          window.location.href = newUrl;
+        }
+        function changeGroup() {
+          let newUrl = window.location.href.replace("/group", "/change_group");
           window.location.href = newUrl;
         }
 	</script>
@@ -148,72 +157,38 @@
     <div style="width: 20%; height: auto;">
         <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
     </div>
-    <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+    <button onclick="redirectToWallets()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
     <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
     <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
     <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 </div>
-<!--<h1 th:text="${username} + ' investment'"/>-->
-<!--<div th:text="${investment.title}"></div>-->
-<!--<div th:text="${investment.description}"></div>-->
-<!--<div th:text="${investment.amount}"></div>-->
-<!--<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">-->
-<!--    <div>-->
-<!--        <input type="submit" value="Save changes">-->
-<!--    </div>-->
-<!--</form>-->
 
-
-<!--<div>-->
-<!--    <h1>Title:</h1>-->
-<!--    <input type="text" th:value="${investment.title}" />-->
-<!--</div>-->
-<!--<div>-->
-<!--    <h1>Description:</h1>-->
-<!--    <textarea th:value="${investment.description}"></textarea>-->
-<!--</div>-->
-<!--<div>-->
-<!--    <h1>Amount:</h1>-->
-<!--    <input type="number" th:value="${investment.amount}" />-->
-<!--</div>-->
-<!--<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">-->
-<!--    <div>-->
-<!--        <input type="hidden" name="existingTitle" th:value="${investment.title}" />-->
-<!--        <input type="hidden" name="existingDescription" th:value="${investment.description}" />-->
-<!--        <input type="hidden" name="existingAmount" th:value="${investment.amount}" />-->
-<!--        <input type="submit" value="Save changes" />-->
-<!--    </div>-->
-<!--</form>-->
-
-
-<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">
-    <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" th:value="${investment.title}" required>
+<div class="panel">
+    <li style="display: flex; justify-content: space-between;">
+            <strong th:text="${group_title}"></strong>
+        <strong th:text="'invitation code: ' + ${code}"></strong>
+    </li>
+    <div th:each="expense, index : ${group_expenses}" class="panel">
+        <li style="display: flex; justify-content: space-between;">
+            <div th:text="${expense.title}"></div>
+            <div th:text="${expense.sum} + '$'"+></div>
+        </li>
+        <li style="display: flex; justify-content: space-between;">
+            <div th:text="'paid by ' + ${payers[__${index.index}__]}"></div>
+            <div th:text="'you owe ' + ${debts[__${index.index}__]}"+></div>
+        </li>
     </div>
-    <div>
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" th:value="${investment.description}" required>
-    </div>
-    <div>
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" th:value="${investment.amount}" required>
-    </div>
-    <div>
-        <input type="submit" value="Submit">
-    </div>
-</form>
 
-
-
-
-
-<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id} + '/delete'}" method="POST">
-    <div>
-        <input type="submit" value="Delete investment">
-    </div>
-</form>
-
+    <!--    <div th:each="expense : ${group_expenses}" class="panel">-->
+    <!--        <li style="display: flex; justify-content: space-between;">-->
+    <!--            <div th:text="${expense.title}"></div>-->
+    <!--            <div th:text="'???' + '/' + expense.sum + '$'}"+></div>-->
+    <!--        </li>-->
+    <!--&lt;!&ndash;        <div class="progress-bar">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <div class="progress" th:style="'&#45;&#45;progress-percent: ' + (${expense.current_sum * 100 / expense.limit_sum} > 100 ? '100' : ${expense.current_sum * 100 / expense.limit_sum}) + '%'"></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </div>&ndash;&gt;-->
+    <!--    </div>-->
+</div>
 
 </body>
 </html>

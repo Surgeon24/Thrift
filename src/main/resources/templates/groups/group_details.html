@@ -145,6 +145,10 @@
           let newUrl = baseUrl + "/profile";
           window.location.href = newUrl;
         }
+        function changeGroup() {
+          let newUrl = window.location.href.replace("/group", "/change_group");
+          window.location.href = newUrl;
+        }
 	</script>
 </head>
 <body>
@@ -161,8 +165,12 @@
 
 <div class="panel">
     <li style="display: flex; justify-content: space-between;">
-        <strong th:text="${group_title}"></strong>
-        <!--                <div th:text="${'1000' + '/' + '10000' + '$'}"+></div>-->
+        <div>
+            <strong th:text="${group_title}"></strong>
+            <button th:onclick="'changeGroup()'">
+                <img th:src="@{/icons/preferences.png}" alt="edit" style="width: auto; height: 1em;">
+            </button>
+        </div>
     </li>
     <div th:each="expense, index : ${group_expenses}" class="panel">
         <li style="display: flex; justify-content: space-between;">

@@ -29,9 +29,9 @@
             background-color: #3366FF;
         }
 
-        .list div:hover {
-            background-color: #BBBBBB;
-        }
+<!--        .list div:hover {-->
+<!--            background-color: #BBBBBB;-->
+<!--        }-->
 
 		/* Style for the icon in the header panel buttons */
 		.header button img {
@@ -150,14 +150,19 @@
 </div>
 <h1 th:text="${username} + ' investments'"/>
   <div class="list" th:each="instrument : ${instruments}">
-    <div class="panel" th:onclick="'redirectToInvestment(\'' + ${instrument.id} + '\')'">
-    <li style="display: flex; justify-content: space-between;">
-        <div th:text="${instrument.title}"></div>
+    <div class="panel">
+      <li style="display: flex; justify-content: space-between;">
+        <div>
+          <strong th:text="${instrument.title}"></strong>
+          <button th:onclick="'redirectToInvestment(\'' + ${instrument.id} + '\')'">
+            <img th:src="@{/icons/preferences.png}" alt="edit" style="width: auto; height: 1em;">
+          </button>
+        </div>
         <div th:text="${instrument.amount + ' $'}"></div>
-    </li>
-    <li style="display: flex; justify-content: space-between;">
-      <div th:text="${instrument.description}"></div>
-    </li>
+      </li>
+      <li style="display: flex; justify-content: space-between;">
+        <div th:text="${instrument.description}"></div>
+      </li>
     </div>
   </div>
 

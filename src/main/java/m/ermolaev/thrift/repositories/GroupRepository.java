@@ -27,11 +27,13 @@ public class GroupRepository {
     public void addGroup(Integer id, String title, String description){
         System.out.println("trying to add group...\n");
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO group_table (title, description) VALUES (?, ?)";
+        String code = getAlphaNumericString(6) + id.toString();
+        String sql = "INSERT INTO group_table (title, description, code) VALUES (?, ?, ?)";
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, title);
             ps.setString(2, description);
+            ps.setString(3, code);
             return ps;
         }, keyHolder);
 
@@ -70,4 +72,35 @@ public class GroupRepository {
         }
     }
 
+    public void joinGroup(int user_id, String code) {
+        String joinSql = "INSERT INTO group_user (group_id, user_id) SELECT id, ? FROM group_table WHERE code = ?";
+        jdbcTemplate.update(joinSql, user_id, code);
+
+        System.out.println("Success!\n");
+    }
+
+
+
+    static String getAlphaNumericString(int n)
+    {
+        // choose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+        for (int i = 0; i < n; i++) {
+            int index
+                    = (int)(AlphaNumericString.length()
+                    * Math.random());
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+        return sb.toString();
+    }
+
+    public String getCode(int id){
+        return jdbcTemplate.queryForObject("SELECT code FROM group_table WHERE id = ?",
+                new Object[]{id}, String.class);
+    }
 }

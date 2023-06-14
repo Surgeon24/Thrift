@@ -137,6 +137,15 @@
           let newUrl = window.location.href.replace("/profile", "/new_group");
           window.location.href = newUrl;
         }
+        function redirectToJoinGroup() {
+          let newUrl = window.location.href.replace("/profile", "/join_group");
+          window.location.href = newUrl;
+        }
+        function redirectToLogin() {
+            let newUrl = window.location.origin + "/login";
+            window.location.href = newUrl;
+        }
+
 	</script>
 </head>
 <body>
@@ -164,9 +173,10 @@
   <ul>
       <button onclick="redirectToCreateWallet()"><img th:src="@{/icons/wallet.png}" alt="New group">New wallet</button>
       <button onclick="redirectToCreateGroup()"><img th:src="@{/icons/groups.png}" alt="New group">New group</button>
+      <button onclick="redirectToJoinGroup()"><img th:src="@{/icons/groups.png}" alt="Join group">Join group</button>
       <button onclick="redirectToCreateInvestment()"><img th:src="@{/icons/investments.png}" alt="New group">New investment</button>
       <button><img th:src="@{/icons/preferences.png}" alt="Preferences">Preferences</button>
-      <button><img th:src="@{/icons/log_out.png}" alt="Log out">Log out</button>
+      <button onclick="redirectToLogin()"><img th:src="@{/icons/log_out.png}" alt="Log out">Log out</button>
   </ul>
 </div>
 </body>

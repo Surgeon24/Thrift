@@ -118,21 +118,21 @@
 		}
 
 		function redirectToWallet() {
-          let newUrl = window.location.href.replace("/new_investment", "/wallets");
+          let newUrl = window.location.href.replace("/join_group", "/wallets");
           window.location.href = newUrl;
         }
         function redirectToGroups() {
-          let newUrl = window.location.href.replace("/new_investment", "/groups");
+          let newUrl = window.location.href.replace("/join_group", "/groups");
           window.location.href = newUrl;
         }
 
         function redirectToInvestments() {
-          let newUrl = window.location.href.replace("/new_investment", "/investments");
+          let newUrl = window.location.href.replace("/join_group", "/investments");
           window.location.href = newUrl;
         }
 
         function redirectToProfile() {
-          let newUrl = window.location.href.replace("/new_investment", "/profile");
+          let newUrl = window.location.href.replace("/join_group", "/profile");
           window.location.href = newUrl;
         }
 	</script>
@@ -148,24 +148,15 @@
   <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
   <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 </div>
-<h1>New investment</h1>
-<form th:action="@{'/' + ${username} + '/new_investment'}" method="POST">
+<h1>Join group</h1>
+<form th:action="@{'/' + ${username} + '/join_group'}" method="POST">
   <div>
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
-  </div>
-  <div>
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" required>
-  </div>
-  <div>
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="amount" required>
+    <label for="code">Invitation code:</label>
+    <input type="text" id="code" name="code" required>
   </div>
   <div>
     <input type="submit" value="Submit">
   </div>
 </form>
-
 </body>
 </html>

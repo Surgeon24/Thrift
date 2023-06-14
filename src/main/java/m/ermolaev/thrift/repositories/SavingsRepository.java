@@ -36,4 +36,23 @@ public class SavingsRepository {
         String sql = "DELETE FROM savings WHERE id = ?;";
         jdbcTemplate.update(sql, id);
     }
+
+    public void updateInvestment(Integer user_id, String title, String description, Integer amount, Integer id) {
+        System.out.println("Trying to update an investment...\n");
+        String sql = "UPDATE savings SET user_id = ?, title = ?, description = ?, amount = ? WHERE id = ?;";
+        jdbcTemplate.update(sql, user_id, title, description, amount, id);
+        System.out.println("Success!\n");
+    }
+
+//    public void updateInvestment(Savings investment) {
+//        // Perform the update operation using the provided investment object
+//        // Update the corresponding record in the database based on the investment's ID
+//
+//        // Sample code to update the investment record using JDBC or an ORM framework
+//        String sql = "UPDATE savings SET title = ?, description = ?, amount = ? WHERE id = ?";
+//        jdbcTemplate.update(sql, investment.getTitle(), investment.getDescription(), investment.getAmount(), investment.getId());
+//
+//        // Additional logic if needed
+//    }
+
 }

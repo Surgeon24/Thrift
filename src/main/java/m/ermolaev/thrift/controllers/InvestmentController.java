@@ -80,17 +80,54 @@ public class InvestmentController {
     }
 
     @PostMapping("/investment/{investment_id}")
-    public ModelAndView updateInvestment(@PathVariable String username, @PathVariable String investment_id) {
-        System.out.println("DeleteMapping of investment\n");
+    public ModelAndView updateInvestment(@PathVariable String username, @PathVariable String investment_id, @RequestParam String title, @RequestParam String description,
+                                         @RequestParam Integer amount) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-//            savingsRepository.updateInvestment(Integer.parseInt(investment_id));
-            modelAndView.addObject("success", "Investment deleted successfully");
+            savingsRepository.updateInvestment(userRepository.getUserId(username), title, description, amount, Integer.parseInt(investment_id));
+            System.out.println("add changes\n");
+            modelAndView.addObject("success", "Investment updated successfully");
             modelAndView.setViewName("redirect:/{username}/investments");
         } catch (Exception e) {
+            System.out.println("exception was catched\n");
             modelAndView.addObject("error", e.getMessage());
             modelAndView.setViewName("redirect:/{username}/investments");
         }
         return modelAndView;
     }
+//
+//    @PostMapping("/investment/{investment_id}")
+//    public ModelAndView updateInvestment(@PathVariable String username, @PathVariable String investment_id,
+//                                         @ModelAttribute("investment") Savings investment) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        try {
+//            Integer investmentId = Integer.parseInt(investment_id);
+//            Integer userId = userRepository.getUserId(username);
+//
+//            // Retrieve the existing investment details
+//            Savings existingInvestment = savingsRepository.getInvestment(investmentId);
+//
+//            // Update the investment details
+//            existingInvestment.setTitle(investment.getTitle());
+//            existingInvestment.setDescription(investment.getDescription());
+//            existingInvestment.setAmount(investment.getAmount());
+//
+//            // Save the updated investment
+//            savingsRepository.updateInvestment(existingInvestment);
+//
+//            modelAndView.addObject("success", "Investment updated successfully");
+//            modelAndView.setViewName("redirect:/{username}/investments");
+//        } catch (Exception e) {
+//            modelAndView.addObject("error", e.getMessage());
+//            modelAndView.setViewName("redirect:/{username}/investments");
+//        }
+//        return modelAndView;
+//    }
+
+
+
+
+
 }
+
+

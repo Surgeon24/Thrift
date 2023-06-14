@@ -67,4 +67,13 @@ public class WalletController {
         return modelAndView;
     }
 
+    @GetMapping("/wallet/{id}")
+    public ModelAndView walletPage(@PathVariable String username, @PathVariable String id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("wallets/wallet");
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("id", Integer.parseInt(id));
+        return modelAndView;
+    }
+
 }

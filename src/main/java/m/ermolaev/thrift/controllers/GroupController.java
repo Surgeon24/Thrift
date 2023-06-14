@@ -34,6 +34,29 @@ public class GroupController {
         return modelAndView;
     }
 
+    @GetMapping("/join_group")
+    public ModelAndView joinGroupPage(@PathVariable String username){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("groups/join_group");
+        modelAndView.addObject("username", username);
+        return modelAndView;
+    }
+
+    @PostMapping("/join_group")
+    public ModelAndView createGroup(@PathVariable String username, @RequestParam String code){
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            User user = userRepository.getUser(username);
+            groupRepository.joinGroup(user.getId(), code);
+            modelAndView.addObject("success", "Group joined successfully");
+            modelAndView.setViewName("redirect:/{username}/groups");
+        } catch (Exception e) {
+            modelAndView.addObject("error", e.getMessage());
+            modelAndView.setViewName("redirect:/{username}/join_group");
+        }
+        return modelAndView;
+    }
+
     @GetMapping("/new_group")
     public ModelAndView createGroupPage(@PathVariable String username){
         ModelAndView modelAndView = new ModelAndView();
@@ -63,6 +86,7 @@ public class GroupController {
         modelAndView.setViewName("groups/group_details");
         modelAndView.addObject("username", username);
         modelAndView.addObject("id_group", id_group);
+        modelAndView.addObject("code", groupRepository.getCode(Integer.parseInt(id_group)));
         List<Group_expense> group_expenses = new ArrayList<>();
         group_expenses.addAll(groupRepository.getAllExpenses(Integer.parseInt(id_group)));
         modelAndView.addObject("group_expenses", group_expenses);
@@ -75,6 +99,15 @@ public class GroupController {
         }
         modelAndView.addObject("debts", debts);
         modelAndView.addObject("payers", payers);
+        return modelAndView;
+    }
+
+
+    @GetMapping("/change_group/{id}")
+    public ModelAndView changeGroupPage(@PathVariable String username, @PathVariable String id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView = groupPage(username, id);
+        modelAndView.setViewName("groups/change_group");
         return modelAndView;
     }
 }
