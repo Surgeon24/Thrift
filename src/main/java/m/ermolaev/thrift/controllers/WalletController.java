@@ -26,17 +26,14 @@ public class WalletController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("wallets/wallets");
         modelAndView.addObject("username", username);
-        System.out.println("debug1\n");
+        System.out.println("debug in wallets\n");
         List<Wallet> wallets = userRepository.getAllWallets(username);
         modelAndView.addObject("wallets", wallets);
-        System.out.println("debug2\n");
         List<List<Wallet_expense>> wallet_expenses = new ArrayList<>();
-        System.out.println("debug3\n");
         for (Wallet wallet : wallets) {
             wallet_expenses.add(walletRepository.getAllExpenses(wallet.getId()));
         }
         modelAndView.addObject("wallet_expenses", wallet_expenses);
-        System.out.println("debug4\n");
         return modelAndView;
     }
 

@@ -62,6 +62,18 @@ public class UserRepository {
                 BeanPropertyRowMapper.newInstance(User.class));
     }
 
+    public Integer getUserId(String nickname) {
+        return jdbcTemplate.queryForObject("SELECT id FROM users WHERE username = ? LIMIT 1",
+                new Object[]{nickname},
+                Integer.class);
+    }
+
+    public String getUserNickname(Integer id) {
+        return jdbcTemplate.queryForObject("SELECT username FROM users WHERE id = ? LIMIT 1",
+                new Object[]{id},
+                String.class);
+    }
+
     public List<Group> getAllGroups(String nickname){
         User user = getUser(nickname);
         return jdbcTemplate.query("SELECT * FROM group_table WHERE group_table.id IN (SELECT group_id FROM group_user WHERE user_id = ?)",

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+		/* Style for the header panel */
+		.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #102ECD;
+			color: white;
+			padding: 10px;
+		}
+
+		/* Style for the header panel buttons */
+		.header button {
+			background-color: inherit;
+			border: none;
+			color: white;
+			cursor: pointer;
+			font-size: 16px;
+			margin: 0 10px;
+			display: flex;
+            flex-direction: column;
+            align-items: center;
+		}
+
+		.header button:hover {
+            background-color: #3366FF;
+        }
+
+<!--        .list div:hover {-->
+<!--            background-color: #BBBBBB;-->
+<!--        }-->
+
+		/* Style for the icon in the header panel buttons */
+		.header button img {
+			margin-right: 5px;
+		}
+
+		.currentPage {
+            background-color: #3366FF;
+        }
+
+		/* Style for the profile pop-up */
+		.popup {
+			display: none;
+			position: absolute;
+			top: 50px;
+			right: 10px;
+			background-color: #f1f1f1;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			padding: 10px;
+		}
+
+		/* Style for the profile pop-up buttons */
+		.popup button {
+			background-color: inherit;
+			border: none;
+			color: black;
+			cursor: pointer;
+			font-size: 16px;
+			margin: 0 10px;
+		}
+
+		/* Style for the panel with title and list */
+		.panel {
+			background-color: #f1f1f1;
+			border: 1px solid #ccc;
+			border-radius: 30px;
+			padding: 10px;
+			margin-top: 20px;
+		}
+
+		/* Style for the title of the panel */
+		.panel h2 {
+			margin-top: 0;
+			margin-bottom: 10px;
+			font-size: 20px;
+		}
+
+		/* Style for the list in the panel */
+		.panel ul {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+
+		/* Style for the items in the list */
+		.panel li {
+			margin-bottom: 5px;
+			font-size: 16px;
+		}
+
+		/* Style for the background image */
+		body {
+			background-image: url('/background.png');
+			background-size: cover;
+		}
+
+    .progress-bar {
+      height: 10px;
+      width: 100%;
+      border-radius: 10px;
+      background-color: white;
+      border: 1px solid black;
+    }
+
+    .progress {
+      height: 100%;
+      border-radius: 10px;
+      background-color: red;
+      width: var(--progress-percent);
+    }
+
+	</style>
+    <script>
+		// Function to toggle the profile pop-up
+		function togglePopup() {
+			var popup = document.getElementById("profile-popup");
+			popup.style.display = popup.style.display === "block" ? "none" : "block";
+		}
+		function redirectToWallets() {
+          let newUrl = window.location.href.replace("/group", "/wallets");
+          window.location.href = newUrl;
+        }
+		function redirectToGroups() {
+          let newUrl = window.location.href.replace("/group", "/groups");
+          window.location.href = newUrl;
+        }
+        function redirectToInvestments() {
+          let newUrl = window.location.href.replace("/group", "/investments");
+          window.location.href = newUrl;
+        }
+        function redirectToProfile() {
+          let newUrl = window.location.href.replace("/group", "/profile");
+          window.location.href = newUrl;
+        }
+	</script>
+</head>
+<body>
+<!-- Header panel with buttons -->
+<div class="header">
+    <div style="width: 20%; height: auto;">
+        <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
+    </div>
+    <button onclick="redirectToWallets()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+    <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
+    <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
+    <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
+</div>
+
+<div class="panel">
+    <li style="display: flex; justify-content: space-between;">
+        <strong th:text="${group_title}"></strong>
+        <!--                <div th:text="${'1000' + '/' + '10000' + '$'}"+></div>-->
+    </li>
+    <div th:each="expense, index : ${group_expenses}" class="panel">
+        <li style="display: flex; justify-content: space-between;">
+            <div th:text="${expense.title}"></div>
+            <div th:text="${expense.sum} + '$'"+></div>
+        </li>
+        <li style="display: flex; justify-content: space-between;">
+            <div th:text="'paid by ' + ${payers[__${index.index}__]}"></div>
+            <div th:text="'you owe ' + ${debts[__${index.index}__]}"+></div>
+        </li>
+    </div>
+
+    <!--    <div th:each="expense : ${group_expenses}" class="panel">-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div th:text="${expense.title}"></div>-->
+<!--            <div th:text="'???' + '/' + expense.sum + '$'}"+></div>-->
+<!--        </li>-->
+<!--&lt;!&ndash;        <div class="progress-bar">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="progress" th:style="'&#45;&#45;progress-percent: ' + (${expense.current_sum * 100 / expense.limit_sum} > 100 ? '100' : ${expense.current_sum * 100 / expense.limit_sum}) + '%'"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </div>-->
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<body>-->
+<!--&lt;!&ndash; Header panel with buttons &ndash;&gt;-->
+<!--<h1 th:text="${username} + ' wallets'"/>-->
+<!--&lt;!&ndash; Panel with title and list &ndash;&gt;-->
+<!--<div class="panel">-->
+<!--    <h2>Current month</h2>-->
+<!--    <ul>-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div>Coffee</div>-->
+<!--            <div>25/50$</div>-->
+<!--        </li>-->
+<!--        <div class="progress-bar">-->
+<!--            <div class="progress" style="&#45;&#45;progress-percent: 50%"></div>-->
+<!--        </div>-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div>Groceries</div>-->
+<!--            <div>100/300$</div>-->
+<!--        </li>-->
+<!--        <div class="progress-bar">-->
+<!--            <div class="progress" style="&#45;&#45;progress-percent: 33%"></div>-->
+<!--        </div>-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div>Gas</div>-->
+<!--            <div>0/100$</div>-->
+<!--        </li>-->
+<!--        <div class="progress-bar">-->
+<!--            <div class="progress" style="&#45;&#45;progress-percent: 0%"></div>-->
+<!--        </div>-->
+<!--    </ul>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
