@@ -1,132 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <style>
-		/* Style for the header panel */
-		.header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			background-color: #102ECD;
-			color: white;
-			padding: 10px;
-		}
-
-		/* Style for the header panel buttons */
-		.header button {
-			background-color: inherit;
-			border: none;
-			color: white;
-			cursor: pointer;
-			font-size: 16px;
-			margin: 0 10px;
-			display: flex;
-            flex-direction: column;
-            align-items: center;
-		}
-
-		.header button:hover {
-            background-color: #3366FF;
-        }
-
-        .list div:hover {
-            background-color: #BBBBBB;
-        }
-
-		/* Style for the icon in the header panel buttons */
-		.header button img {
-			margin-right: 5px;
-		}
-
-		/* Style for the profile pop-up */
-		.popup {
-			display: none;
-			position: absolute;
-			top: 50px;
-			right: 10px;
-			background-color: #f1f1f1;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-			padding: 10px;
-		}
-
-		/* Style for the profile pop-up buttons */
-		.popup button {
-			background-color: inherit;
-			border: none;
-			color: black;
-			cursor: pointer;
-			font-size: 16px;
-			margin: 0 10px;
-		}
-
-		/* Style for the panel with title and list */
-		.panel {
-			background-color: #f1f1f1;
-			border: 1px solid #ccc;
-			border-radius: 30px;
-			padding: 10px;
-			margin-top: 20px;
-		}
-
-		/* Style for the title of the panel */
-		.panel h2 {
-			margin-top: 0;
-			margin-bottom: 10px;
-			font-size: 20px;
-		}
-
-		/* Style for the list in the panel */
-		.panel ul {
-			margin: 0;
-			padding: 0;
-			list-style-type: none;
-		}
-
-		/* Style for the items in the list */
-		.panel li {
-			margin-bottom: 5px;
-			font-size: 16px;
-		}
-
-		/* Style for the background image */
-		body {
-			background-image: url('/background.png');
-			background-size: cover;
-		}
-
-    .progress-bar {
-      height: 10px;
-      width: 100%;
-      border-radius: 10px;
-      background-color: white;
-      border: 1px solid black;
-    }
-
-    .progress {
-      height: 100%;
-      border-radius: 10px;
-      background-color: red;
-    }
-
-	</style>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
     <script>
 		// Function to toggle the profile pop-up
 		function togglePopup() {
 			var popup = document.getElementById("profile-popup");
 			popup.style.display = popup.style.display === "block" ? "none" : "block";
 		}
-
-		function redirectToWallet() {
-          let newUrl = window.location.href.replace("/investment", "/wallets");
+        function redirectToWallet() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let newUrl = baseUrl + "/wallets";
           window.location.href = newUrl;
         }
         function redirectToGroups() {
-          let newUrl = window.location.href.replace("/investment", "/groups");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let newUrl = baseUrl + "/groups";
+          window.location.href = newUrl;
+        }
+        function redirectToInvestments() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let newUrl = baseUrl + "/investments";
           window.location.href = newUrl;
         }
         function redirectToProfile() {
-          let newUrl = window.location.href.replace("/investment", "/profile");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/investment"));
+          let newUrl = baseUrl + "/profile";
           window.location.href = newUrl;
         }
 	</script>
@@ -139,18 +42,63 @@
     </div>
     <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
     <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
-    <button><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
+    <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
     <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 </div>
-<h1 th:text="${username} + ' investment'"/>
-<div th:text="${investment.title}"></div>
-<div th:text="${investment.description}"></div>
-<div th:text="${investment.amount}"></div>
+<!--<h1 th:text="${username} + ' investment'"/>-->
+<!--<div th:text="${investment.title}"></div>-->
+<!--<div th:text="${investment.description}"></div>-->
+<!--<div th:text="${investment.amount}"></div>-->
+<!--<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">-->
+<!--    <div>-->
+<!--        <input type="submit" value="Save changes">-->
+<!--    </div>-->
+<!--</form>-->
+
+
+<!--<div>-->
+<!--    <h1>Title:</h1>-->
+<!--    <input type="text" th:value="${investment.title}" />-->
+<!--</div>-->
+<!--<div>-->
+<!--    <h1>Description:</h1>-->
+<!--    <textarea th:value="${investment.description}"></textarea>-->
+<!--</div>-->
+<!--<div>-->
+<!--    <h1>Amount:</h1>-->
+<!--    <input type="number" th:value="${investment.amount}" />-->
+<!--</div>-->
+<!--<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">-->
+<!--    <div>-->
+<!--        <input type="hidden" name="existingTitle" th:value="${investment.title}" />-->
+<!--        <input type="hidden" name="existingDescription" th:value="${investment.description}" />-->
+<!--        <input type="hidden" name="existingAmount" th:value="${investment.amount}" />-->
+<!--        <input type="submit" value="Save changes" />-->
+<!--    </div>-->
+<!--</form>-->
+
+
 <form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">
     <div>
-        <input type="submit" value="Save changes">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" th:value="${investment.title}" required>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" th:value="${investment.description}" required>
+    </div>
+    <div>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" th:value="${investment.amount}" required>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
     </div>
 </form>
+
+
+
+
 
 <form th:action="@{'/' + ${username} + '/investment/' + ${investment.id} + '/delete'}" method="POST">
     <div>

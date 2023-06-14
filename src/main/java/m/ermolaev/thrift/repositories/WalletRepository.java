@@ -25,4 +25,20 @@ public class WalletRepository {
         jdbcTemplate.update(sql, id, title, time_period);
         System.out.println("success!\n");
     }
+
+    public Integer getSpends(List<Wallet_expense> expenses){
+        Integer spends = 0;
+        for (Wallet_expense expense : expenses){
+            spends += expense.getCurrentSum();
+        }
+        return spends;
+    }
+
+    public Integer getLimits(List<Wallet_expense> expenses){
+        Integer limits = 0;
+        for (Wallet_expense expense : expenses){
+            limits += expense.getLimit();
+        }
+        return limits;
+    }
 }

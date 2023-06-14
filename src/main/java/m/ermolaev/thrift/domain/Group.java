@@ -14,4 +14,5 @@ public class Group {
     private String title;
     private String description;
     private Timestamp created_at;
+    private String code;
 }

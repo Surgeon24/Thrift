@@ -8,20 +8,23 @@
 			var popup = document.getElementById("profile-popup");
 			popup.style.display = popup.style.display === "block" ? "none" : "block";
 		}
-		function redirectToWallets() {
-          let newUrl = window.location.href.replace("/new_wallet", "/wallets");
+
+		function redirectToWallet() {
+          let newUrl = window.location.href.replace("/join_group", "/wallets");
           window.location.href = newUrl;
         }
-		function redirectToGroups() {
-          let newUrl = window.location.href.replace("/new_wallet", "/groups");
+        function redirectToGroups() {
+          let newUrl = window.location.href.replace("/join_group", "/groups");
           window.location.href = newUrl;
         }
+
         function redirectToInvestments() {
-          let newUrl = window.location.href.replace("/new_wallet", "/investments");
+          let newUrl = window.location.href.replace("/join_group", "/investments");
           window.location.href = newUrl;
         }
+
         function redirectToProfile() {
-          let newUrl = window.location.href.replace("/new_wallet", "/profile");
+          let newUrl = window.location.href.replace("/join_group", "/profile");
           window.location.href = newUrl;
         }
 	</script>
@@ -32,32 +35,20 @@
   <div style="width: 20%; height: auto;">
     <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
   </div>
-  <button class="currentPage"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+  <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
   <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
   <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
   <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 </div>
-<h1 th:text="${username} + ' wallets'"/>
-<!-- Panel with title and list -->
-<form th:action="@{'/' + ${username} + '/new_wallet'}" method="POST">
+<h1>Join group</h1>
+<form th:action="@{'/' + ${username} + '/join_group'}" method="POST">
   <div>
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
-  </div>
-  <div>
-    <label for="time_period">Time period:</label>
-    <select id="time_period" name="time_period" required>
-      <option value="year">Year</option>
-      <option value="month">Month</option>
-      <option value="week">Week</option>
-    </select>
+    <label for="code">Invitation code:</label>
+    <input type="text" id="code" name="code" required>
   </div>
   <div>
     <input type="submit" value="Submit">
   </div>
 </form>
-</div>
-
-
 </body>
 </html>

@@ -26,17 +26,21 @@ public class WalletController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("wallets/wallets");
         modelAndView.addObject("username", username);
-        System.out.println("debug1\n");
+        System.out.println("debug in wallets\n");
         List<Wallet> wallets = userRepository.getAllWallets(username);
         modelAndView.addObject("wallets", wallets);
-        System.out.println("debug2\n");
         List<List<Wallet_expense>> wallet_expenses = new ArrayList<>();
-        System.out.println("debug3\n");
+        List<Integer> spends = new ArrayList<>();
+        List<Integer> limits = new ArrayList<>();
         for (Wallet wallet : wallets) {
             wallet_expenses.add(walletRepository.getAllExpenses(wallet.getId()));
+            spends.add(walletRepository.getSpends(walletRepository.getAllExpenses(wallet.getId())));
+            limits.add(walletRepository.getLimits(walletRepository.getAllExpenses(wallet.getId())));
+
         }
         modelAndView.addObject("wallet_expenses", wallet_expenses);
-        System.out.println("debug4\n");
+        modelAndView.addObject("spends", spends);
+        modelAndView.addObject("limits", limits);
         return modelAndView;
     }
 
@@ -60,6 +64,15 @@ public class WalletController {
             modelAndView.addObject("error", e.getMessage());
             modelAndView.setViewName("redirect:/{username}/new_wallet");
         }
+        return modelAndView;
+    }
+
+    @GetMapping("/wallet/{id}")
+    public ModelAndView walletPage(@PathVariable String username, @PathVariable String id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("wallets/wallet");
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("id", Integer.parseInt(id));
         return modelAndView;
     }
 

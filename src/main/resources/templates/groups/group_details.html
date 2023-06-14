@@ -8,21 +8,32 @@
 			var popup = document.getElementById("profile-popup");
 			popup.style.display = popup.style.display === "block" ? "none" : "block";
 		}
+		function redirectToWallets() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/wallets";
+          window.location.href = newUrl;
+        }
 		function redirectToGroups() {
-          let newUrl = window.location.href.replace("/wallets", "/groups");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/groups";
           window.location.href = newUrl;
         }
         function redirectToInvestments() {
-          let newUrl = window.location.href.replace("/wallets", "/investments");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/investments";
           window.location.href = newUrl;
         }
         function redirectToProfile() {
-          let newUrl = window.location.href.replace("/wallets", "/profile");
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/profile";
           window.location.href = newUrl;
         }
-        function redirectToWallet(id) {
-          let str = "/wallet/" + id;
-          let newUrl = window.location.href.replace("/wallets", str);
+        function changeGroup() {
+          let newUrl = window.location.href.replace("/group", "/change_group");
           window.location.href = newUrl;
         }
 	</script>
@@ -33,39 +44,42 @@
     <div style="width: 20%; height: auto;">
         <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
     </div>
-    <button class="currentPage"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+    <button onclick="redirectToWallets()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
     <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
     <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
     <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 </div>
-<h1 th:text="${username} + ' wallets'"/>
-<!-- Panel with title and list -->
-    <div class="list" th:each="wallet, walletIndex : ${wallets}">
-        <div class="panel">
-        <div th:if="${walletIndex.index < wallet_expenses.size()}" th:with="expenses=${wallet_expenses[walletIndex.index]}">
-            <li style="display: flex; justify-content: space-between;">
-                <div>
-                    <strong th:text="${wallet.title}"></strong>
-                    <button th:onclick="'redirectToWallet(' + ${wallet.id} + ')'">
-                        <img th:src="@{/icons/preferences.png}" alt="edit" style="width: auto; height: 1em;">
-                    </button>
-                </div>
-                <strong th:text="${spends[__${walletIndex.index}__]} + '/' + ${limits[__${walletIndex.index}__]}"></strong>
-                <!--                <div th:text="${'1000' + '/' + '10000' + '$'}"+></div>-->
-            </li>
-            <div th:each="expense : ${expenses}" class="panel">
-                <li style="display: flex; justify-content: space-between;">
-                    <div th:text="${expense.title}"></div>
-                    <div th:text="${expense.current_sum + '/' + expense.limit_sum + '$'}"+></div>
-                </li>
-                <div class="progress-bar">
-                    <div class="progress" th:style="'--progress-percent: ' + (${expense.current_sum * 100 / expense.limit_sum} > 100 ? '100' : ${expense.current_sum * 100 / expense.limit_sum}) + '%'"></div>
-                </div>
-            </div>
+
+<div class="panel">
+    <li style="display: flex; justify-content: space-between;">
+        <div>
+            <strong th:text="${group_title}"></strong>
+            <button th:onclick="'changeGroup()'">
+                <img th:src="@{/icons/preferences.png}" alt="edit" style="width: auto; height: 1em;">
+            </button>
         </div>
-        </div>
+    </li>
+    <div th:each="expense, index : ${group_expenses}" class="panel">
+        <li style="display: flex; justify-content: space-between;">
+            <div th:text="${expense.title}"></div>
+            <div th:text="${expense.sum} + '$'"+></div>
+        </li>
+        <li style="display: flex; justify-content: space-between;">
+            <div th:text="'paid by ' + ${payers[__${index.index}__]}"></div>
+            <div th:text="'you owe ' + ${debts[__${index.index}__]}"+></div>
+        </li>
     </div>
 
+    <!--    <div th:each="expense : ${group_expenses}" class="panel">-->
+<!--        <li style="display: flex; justify-content: space-between;">-->
+<!--            <div th:text="${expense.title}"></div>-->
+<!--            <div th:text="'???' + '/' + expense.sum + '$'}"+></div>-->
+<!--        </li>-->
+<!--&lt;!&ndash;        <div class="progress-bar">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="progress" th:style="'&#45;&#45;progress-percent: ' + (${expense.current_sum * 100 / expense.limit_sum} > 100 ? '100' : ${expense.current_sum * 100 / expense.limit_sum}) + '%'"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </div>-->
+</div>
 
 </body>
 </html>
