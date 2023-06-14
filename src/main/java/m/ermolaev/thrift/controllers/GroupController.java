@@ -48,7 +48,7 @@ public class GroupController {
         try {
             User user = userRepository.getUser(username);
             groupRepository.addGroup(user.getId(), title, description);
-            modelAndView.addObject("success", "Investment added successfully");
+            modelAndView.addObject("success", "Group added successfully");
             modelAndView.setViewName("redirect:/{username}/groups");
         } catch (Exception e) {
             modelAndView.addObject("error", e.getMessage());
