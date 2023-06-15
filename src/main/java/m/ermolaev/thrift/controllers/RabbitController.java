@@ -31,17 +31,4 @@ public class RabbitController {
         return ResponseEntity.ok("Success emit queue");
     }
 
-    @GetMapping("/test")
-    public ModelAndView test() {
-        ModelAndView modelAndView = new ModelAndView();
-        logger.info("test");
-        List<Integer> recipients = new ArrayList<>();
-        recipients.addAll(groupRepository.getAllParticipants(1));
-        logger.info(recipients.toString());
-        modelAndView.addObject("recipients", recipients);
-        modelAndView.setViewName("groups/test");
-        return modelAndView;
-    }
-
-
 }

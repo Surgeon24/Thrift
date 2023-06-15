@@ -195,6 +195,13 @@
             window.location.href = newUrl;
         }
 
+        function deletePanel(panelId) {
+            var panelElement = document.getElementById(panelId);
+            if (panelElement) {
+                panelElement.remove();
+            }
+        }
+
 	</script>
 </head>
 <body>
@@ -237,22 +244,22 @@
         </button>
 </div>
 <div class="notifications">
-    <h2>Your notifications:</h2>
+    <h2>Your notifications</h2>
     <div class="list" th:each="notification, notificationIndex : ${notifications}">
-        <div class="panel">
+        <div id="panel-1" class="panel">
             <ul>
                 <li style="display: flex; justify-content: space-between;">
                     <strong th:text="${notification.message}"></strong>
-                </li>
-                <li style="display: flex; justify-content: space-between;">
-                    <div th:text="'???'"></div>
+                    <strong onclick="deletePanel('panel-1')" th:text="'hide'" style="margin-left: 20px;"></strong>
                 </li>
             </ul>
         </div>
     </div>
-    <div>Notification 1</div>
-    <div>Notification 2</div>
-    <div>Notification 3</div>
+
+    <div th:if="${notifications.isEmpty()}" class="no-messages">
+        <strong>you don't have any notifications</strong>
+    </div>
+
 </div>
 </body>
 </html>
