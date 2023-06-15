@@ -47,12 +47,6 @@
   <button><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
   <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
   <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
-<!--  <button onclick="togglePopup()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>-->
-<!--  <div id="profile-popup" class="popup">-->
-<!--    <button onclick="redirectToProfile()">View profile</button>-->
-<!--    <button>Option 2</button>-->
-<!--    <button>Log out</button>-->
-<!--  </div>-->
 </div>
 <h1 th:text="${username} + ' groups'"/>
   <div class="list" th:each="group, groupIndex : ${groups}">

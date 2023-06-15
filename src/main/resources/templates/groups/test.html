@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Test:
+<div class="list" th:each="r, groupIndex : ${recipients}">
+    <strong th:text="${r}"></strong>
+</div>
+</body>
+</html>

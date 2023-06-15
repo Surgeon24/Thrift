@@ -3,6 +3,9 @@ package m.ermolaev.thrift.controllers;
 import m.ermolaev.thrift.domain.*;
 import m.ermolaev.thrift.repositories.GroupRepository;
 import m.ermolaev.thrift.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,10 +17,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/{username}")
 public class GroupController {
+    Logger logger = LoggerFactory.getLogger(GroupController.class);
+    private final RabbitTemplate rabbitTemplate;
     @Autowired
     UserRepository userRepository;
     @Autowired
     GroupRepository groupRepository;
+    @Autowired
+    public GroupController(RabbitTemplate rabbitTemplate) {this.rabbitTemplate = rabbitTemplate;}
 
     @GetMapping("/groups")
     public ModelAndView groupsPage(@PathVariable String username) {
@@ -43,12 +50,14 @@ public class GroupController {
     }
 
     @PostMapping("/join_group")
-    public ModelAndView createGroup(@PathVariable String username, @RequestParam String code){
+    public ModelAndView joinGroup(@PathVariable String username, @RequestParam String code){
         ModelAndView modelAndView = new ModelAndView();
         try {
             User user = userRepository.getUser(username);
             groupRepository.joinGroup(user.getId(), code);
             modelAndView.addObject("success", "Group joined successfully");
+            logger.info("start of sending notifications");
+            sendNotifications(username, groupRepository.getGroupByCode(code));
             modelAndView.setViewName("redirect:/{username}/groups");
         } catch (Exception e) {
             modelAndView.addObject("error", e.getMessage());
@@ -109,5 +118,18 @@ public class GroupController {
         modelAndView = groupPage(username, id);
         modelAndView.setViewName("groups/change_group");
         return modelAndView;
+    }
+
+    public void sendNotifications(String username, Group group){
+        List<Integer> recipients = new ArrayList<>();
+        recipients.addAll(groupRepository.getAllParticipants(group.getId()));
+        logger.info(recipients.toString());
+        Notification notification = new Notification();
+        String message = username + " joined your group '" + group.getTitle() + "'!";
+        notification.setMessage(message);
+        for (Integer recipient : recipients){
+            notification.setRecipient(recipient);
+            rabbitTemplate.convertAndSend("myQueue", notification);
+        }
     }
 }
