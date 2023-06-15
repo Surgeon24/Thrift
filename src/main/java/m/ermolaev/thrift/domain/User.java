@@ -16,4 +16,14 @@ public class User {
     private String password_hash;
     private String role;
     private Timestamp created_at;
+
+    public String getUsername() {return nickname;}
+    public String getPassword() {
+        return password_hash;
+    }
+    public String getRoles() {
+        return role;
+    }
+
+
 }
