@@ -1,8 +1,9 @@
 package m.ermolaev.thrift.repositories;
 
+import io.swagger.models.auth.In;
 import m.ermolaev.thrift.domain.Group;
 import m.ermolaev.thrift.domain.Group_expense;
-import m.ermolaev.thrift.domain.Wallet_expense;
+import m.ermolaev.thrift.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -111,8 +113,28 @@ public class GroupRepository {
     }
 
 
-    public List<Integer> getAllParticipants(int id){
+    public List<Integer> getAllParticipantsIDs(int id){
         return jdbcTemplate.queryForList("SELECT user_id FROM group_user WHERE group_id = ?",
                 new Object[]{id}, Integer.class);
     }
+
+    public List<User> getAllParticipants(int group_id){
+        List<User> users = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
+        ids.addAll(getAllParticipantsIDs(group_id));
+        for (Integer id : ids){
+            users.add(jdbcTemplate.queryForObject("SELECT id AS id, username AS nickname, role AS role FROM users WHERE id = ? LIMIT 1",
+                    new Object[]{id}, new BeanPropertyRowMapper<>(User.class)));
+        }
+        return users;
+    }
+
+    public void addExpense(String title, int sum, int user_id, int group_id) {
+        String joinSql = "INSERT INTO group_expense (title, sum, payer_id, group_id) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(joinSql, title, sum, user_id, group_id);
+
+        System.out.println("Success!\n");
+    }
+
+
 }

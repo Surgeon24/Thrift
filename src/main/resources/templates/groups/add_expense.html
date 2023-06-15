@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+    <script>
+		// Function to toggle the profile pop-up
+		function redirectToWallet() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/wallets";
+          window.location.href = newUrl;
+		}
+		function redirectToGroups() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/groups";
+          window.location.href = newUrl;
+		}
+
+		function redirectToInvestments() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/investments";
+          window.location.href = newUrl;
+		}
+
+		function redirectToProfile() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/group"));
+          let newUrl = baseUrl + "/profile";
+          window.location.href = newUrl;
+		}
+        function goBack() {
+            let newUrl = window.location.href.replace("/add_new", " ");
+            window.location.href = newUrl;
+        }
+	</script>
+</head>
+<body>
+<!-- Header panel with buttons -->
+<div class="header">
+    <div style="width: 20%; height: auto;">
+        <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
+    </div>
+    <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+    <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
+    <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
+    <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
+</div>
+<h1>New investment</h1>
+<form th:action="@{'/' + ${username} + '/group/' + ${id} + '/add_new'}" method="POST">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required>
+    </div>
+<!--    <div th:each="user : ${users}">-->
+<!--        <div>-->
+<!--            <label th:for="'recipient-' + ${user.id}">Recipient:</label>-->
+<!--            <input type="number" th:id="'recipient-' + ${user.id}" name="recipient">-->
+<!--&lt;!&ndash;            <input type="radio" th:id="'recipient-' + ${user.id}" name="recipient" th:value="${user.nickname}">&ndash;&gt;-->
+<!--            <label th:for="'recipient-' + ${user.id}" th:text="${user.nickname}"></label>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+<div>
+    <button onclick="goBack()">go back</button>
+</div>
+</body>
+</html>

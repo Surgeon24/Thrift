@@ -103,4 +103,9 @@ public class UserRepository {
                 BeanPropertyRowMapper.newInstance(Notification.class));
     }
 
+    public void deleteNotifications(int id){
+        String sql = "DELETE FROM notifications WHERE recipient = ?;";
+        jdbcTemplate.update(sql, id);
+    }
+
 }

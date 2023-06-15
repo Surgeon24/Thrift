@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" th:href="@{/styles.css}" />
+  <script>
+		// Function to toggle the profile pop-up
+		function redirectToWallet() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/wallet"));
+          let newUrl = baseUrl + "/wallets";
+          window.location.href = newUrl;
+		}
+		function redirectToGroups() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/wallet"));
+          let newUrl = baseUrl + "/groups";
+          window.location.href = newUrl;
+		}
+
+		function redirectToInvestments() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/wallet"));
+          let newUrl = baseUrl + "/investments";
+          window.location.href = newUrl;
+		}
+
+		function redirectToProfile() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/wallet"));
+          let newUrl = baseUrl + "/profile";
+          window.location.href = newUrl;
+		}
+        function goBack() {
+          let currentUrl = window.location.href;
+          let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/wallet"));
+          let newUrl = baseUrl + "/wallets";
+          window.location.href = newUrl;
+        }
+	</script>
+</head>
+<body>
+<!-- Header panel with buttons -->
+<div class="header">
+  <div style="width: 20%; height: auto;">
+    <img th:src="@{/icons/logo.png}" alt="Thrift" style="width: 100%; height: auto;">
+  </div>
+  <button onclick="redirectToWallet()"><img th:src="@{/icons/wallet.png}" alt="Wallet">Personal Wallets</button>
+  <button onclick="redirectToGroups()"><img th:src="@{/icons/groups.png}" alt="Groups">Groups</button>
+  <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
+  <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
+</div>
+<h1>New expense</h1>
+<form th:action="@{'/' + ${username} + '/wallet/' + ${id} + '/add_expense'}" method="POST">
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+  <div>
+    <label for="limit">Limit:</label>
+    <input type="number" id="limit" name="limit" required>
+  </div>
+  <div>
+    <input type="submit" value="Submit">
+  </div>
+</form>
+<div>
+  <button onclick="goBack()">go back</button>
+</div>
+</body>
+</html>

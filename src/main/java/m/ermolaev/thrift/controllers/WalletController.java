@@ -76,4 +76,21 @@ public class WalletController {
         return modelAndView;
     }
 
+    @GetMapping("/wallet/{id}/add_expense")
+    public ModelAndView walletAddExpensePage(@PathVariable String username, @PathVariable String id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("wallets/add_expense");
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("id", Integer.parseInt(id));
+        return modelAndView;
+    }
+
+    @PostMapping("/wallet/{id}/add_expense")
+    public ModelAndView walletAddExpense(@PathVariable String username, @PathVariable String id, @RequestParam String title, @RequestParam Integer limit){
+        ModelAndView modelAndView = new ModelAndView();
+        walletRepository.addExpense(Integer.parseInt(id), title, limit);
+        modelAndView.setViewName("redirect:/{username}/wallets");
+        return modelAndView;
+    }
+
 }

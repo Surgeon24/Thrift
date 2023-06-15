@@ -2,6 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/styles.css}" />
+    <style>
+        .progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #ccc;
+}
+
+.progress {
+  height: 100%;
+  background-color: red;
+  width: var(--progress-percent);
+}
+    </style>
     <script>
 		// Function to toggle the profile pop-up
 		function togglePopup() {
@@ -25,6 +38,12 @@
           let newUrl = window.location.href.replace("/wallets", str);
           window.location.href = newUrl;
         }
+        function addExpense(id){
+            let currentUrl = window.location.href;
+            let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf("/wallets"));
+            let newUrl = baseUrl + "/wallet/" + id + "/add_expense";
+            window.location.href = newUrl;
+        }
 	</script>
 </head>
 <body>
@@ -46,8 +65,12 @@
             <li style="display: flex; justify-content: space-between;">
                 <div>
                     <strong th:text="${wallet.title}"></strong>
-                    <button th:onclick="'redirectToWallet(' + ${wallet.id} + ')'">
+                    <button>
+<!--                    <button th:onclick="'redirectToWallet(' + ${wallet.id} + ')'">-->
                         <img th:src="@{/icons/preferences.png}" alt="edit" style="width: auto; height: 1em;">
+                    </button>
+                    <button th:onclick="'addExpense(' + ${wallet.id} + ')'">
+                        <img th:src="@{/icons/add.png}" alt="add" style="width: auto; height: 1em;">
                     </button>
                 </div>
                 <strong th:text="${spends[__${walletIndex.index}__]} + '/' + ${limits[__${walletIndex.index}__]}"></strong>
@@ -56,12 +79,13 @@
             <div th:each="expense : ${expenses}" class="panel">
                 <li style="display: flex; justify-content: space-between;">
                     <div th:text="${expense.title}"></div>
-                    <div th:text="${expense.current_sum + '/' + expense.limit_sum + '$'}"+></div>
+                    <div th:text="${expense.current_sum + '/' + expense.limit_sum + '$'}"></div>
                 </li>
                 <div class="progress-bar">
-                    <div class="progress" th:style="'--progress-percent: ' + (${expense.current_sum * 100 / expense.limit_sum} > 100 ? '100' : ${expense.current_sum * 100 / expense.limit_sum}) + '%'"></div>
+                    <div class="progress" th:style="'--progress-percent: ' + (${expense.current_sum * 100.0 / expense.limit_sum} > 100.0 ? '100' : ${expense.current_sum * 100.0 / expense.limit_sum}) + '%'"></div>
                 </div>
             </div>
+
         </div>
         </div>
     </div>

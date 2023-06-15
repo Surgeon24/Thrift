@@ -36,6 +36,10 @@
           let newUrl = window.location.href.replace("/group", "/change_group");
           window.location.href = newUrl;
         }
+        function addExpense(){
+            let newUrl = window.location.href + "/add_new";
+            window.location.href = newUrl;
+        }
 	</script>
 </head>
 <body>
@@ -56,6 +60,9 @@
             <strong th:text="${group_title}"></strong>
             <button th:onclick="'changeGroup()'">
                 <img th:src="@{/icons/preferences.png}" alt="edit" style="width: auto; height: 1em;">
+            </button>
+            <button th:onclick="'addExpense()'">
+                <img th:src="@{/icons/add.png}" alt="add" style="width: auto; height: 1em;">
             </button>
         </div>
     </li>
