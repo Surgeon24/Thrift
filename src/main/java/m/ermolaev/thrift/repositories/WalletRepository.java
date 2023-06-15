@@ -41,4 +41,11 @@ public class WalletRepository {
         }
         return limits;
     }
+
+    public void addExpense(int id, String title, int limit){
+        String joinSql = "INSERT INTO wallet_expense (wallet_id, title, limit_sum, current_sum) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(joinSql, id, title, limit, 0);
+
+        System.out.println("Success!\n");
+    }
 }
