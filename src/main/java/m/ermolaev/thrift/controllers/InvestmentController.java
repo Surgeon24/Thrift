@@ -95,36 +95,6 @@ public class InvestmentController {
         }
         return modelAndView;
     }
-//
-//    @PostMapping("/investment/{investment_id}")
-//    public ModelAndView updateInvestment(@PathVariable String username, @PathVariable String investment_id,
-//                                         @ModelAttribute("investment") Savings investment) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        try {
-//            Integer investmentId = Integer.parseInt(investment_id);
-//            Integer userId = userRepository.getUserId(username);
-//
-//            // Retrieve the existing investment details
-//            Savings existingInvestment = savingsRepository.getInvestment(investmentId);
-//
-//            // Update the investment details
-//            existingInvestment.setTitle(investment.getTitle());
-//            existingInvestment.setDescription(investment.getDescription());
-//            existingInvestment.setAmount(investment.getAmount());
-//
-//            // Save the updated investment
-//            savingsRepository.updateInvestment(existingInvestment);
-//
-//            modelAndView.addObject("success", "Investment updated successfully");
-//            modelAndView.setViewName("redirect:/{username}/investments");
-//        } catch (Exception e) {
-//            modelAndView.addObject("error", e.getMessage());
-//            modelAndView.setViewName("redirect:/{username}/investments");
-//        }
-//        return modelAndView;
-//    }
-
-
 
 
 
