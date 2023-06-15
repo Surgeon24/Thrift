@@ -25,4 +25,15 @@ public class ProfileController {
         modelAndView.addObject("notifications", notifications);
         return modelAndView;
     }
+
+    @GetMapping("/delete_notifications")
+    public ModelAndView deleteNotifications(@PathVariable String username) {
+        userRepository.deleteNotifications(userRepository.getUserId(username));
+        ModelAndView modelAndView = new ModelAndView();
+        List<Notification> notifications = new ArrayList<>();
+        modelAndView.setViewName("redirect:/{username}/profile");
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("notifications", notifications);
+        return modelAndView;
+    }
 }

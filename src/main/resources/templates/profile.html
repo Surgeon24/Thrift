@@ -202,6 +202,11 @@
             }
         }
 
+        function deleteNotifications() {
+          let newUrl = window.location.href.replace("/profile", "/delete_notifications");
+          window.location.href = newUrl;
+        }
+
 	</script>
 </head>
 <body>
@@ -240,11 +245,16 @@
         </button>
         <button class="button" onclick="redirectToLogin()">
           <img th:src="@{/icons/log_out.png}" alt="Log out">
-          <h4 th:text="'Log out'"/>
+          <h4 th:text="'Log out'" style="color: red;"/>
         </button>
 </div>
 <div class="notifications">
-    <h2>Your notifications</h2>
+    <li style="display: flex; align-items: center;">
+        <h2>Your notifications   </h2>
+        <img th:src="@{/icons/bin.jpg}" alt="delete notifications" onclick="deleteNotifications()" style="width: auto; height: 1em;">
+    </li>
+
+
     <div class="list" th:each="notification, notificationIndex : ${notifications}">
         <div id="panel-1" class="panel">
             <ul>

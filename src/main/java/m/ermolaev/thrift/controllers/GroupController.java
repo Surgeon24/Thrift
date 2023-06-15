@@ -122,7 +122,7 @@ public class GroupController {
 
     public void sendNotifications(String username, Group group){
         List<Integer> recipients = new ArrayList<>();
-        recipients.addAll(groupRepository.getAllParticipants(group.getId()));
+        recipients.addAll(groupRepository.getAllParticipantsIDs(group.getId()));
         logger.info(recipients.toString());
         Notification notification = new Notification();
         String message = username + " joined your group '" + group.getTitle() + "'!";
@@ -131,5 +131,27 @@ public class GroupController {
             notification.setRecipient(recipient);
             rabbitTemplate.convertAndSend("myQueue", notification);
         }
+    }
+
+
+    @GetMapping("/group/{id}/add_new")
+    public ModelAndView addToGroupPage(@PathVariable String username, @PathVariable String id){
+        ModelAndView modelAndView = new ModelAndView();
+        List<User> users= new ArrayList<>();
+        users.addAll(groupRepository.getAllParticipants(Integer.parseInt(id)));
+        modelAndView = groupPage(username, id);
+        modelAndView.addObject("users", users);
+        modelAndView.addObject("id", id);
+        modelAndView.setViewName("groups/add_expense");
+        return modelAndView;
+    }
+
+    @PostMapping("/group/{id}/add_new")
+    public ModelAndView addToGroup(@PathVariable String username, @PathVariable String id, @RequestParam String title, @RequestParam Integer amount){
+        System.out.println("post method\n");
+        ModelAndView modelAndView = new ModelAndView();
+        groupRepository.addExpense(title, amount, userRepository.getUserId(username), Integer.parseInt(id));
+        modelAndView.setViewName("redirect:/{username}/group/{id}");
+        return modelAndView;
     }
 }

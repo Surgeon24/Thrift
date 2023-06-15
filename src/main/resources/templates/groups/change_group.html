@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/styles.css}" />
-	</style>
     <script>
 		// Function to toggle the profile pop-up
 		function togglePopup() {
@@ -33,8 +32,8 @@
           let newUrl = baseUrl + "/profile";
           window.location.href = newUrl;
         }
-        function changeGroup() {
-          let newUrl = window.location.href.replace("/group", "/change_group");
+        function goBack() {
+          let newUrl = window.location.href.replace("/change_group", "/group");
           window.location.href = newUrl;
         }
 	</script>
@@ -53,7 +52,12 @@
 
 <div class="panel">
     <li style="display: flex; justify-content: space-between;">
+        <div>
             <strong th:text="${group_title}"></strong>
+            <button th:onclick="'goBack()'">
+                <img th:src="@{/icons/go-back-arrow.svg}" alt="go back" style="width: auto; height: 1em;">
+            </button>
+        </div>
         <strong th:text="'invitation code: ' + ${code}"></strong>
     </li>
     <div th:each="expense, index : ${group_expenses}" class="panel">
@@ -66,7 +70,14 @@
             <div th:text="'you owe ' + ${debts[__${index.index}__]}"+></div>
         </li>
     </div>
+    <div>
+        <button onclick="leaveGroup()" style="display: block; margin: 30px auto 0; text-align: center; color: red;">
+            <img th:src="@{/icons/leave.png}" alt="Groups" style="width: auto; height: 2em;">
+            Leave this group
+        </button>
 
+
+    </div>
     <!--    <div th:each="expense : ${group_expenses}" class="panel">-->
     <!--        <li style="display: flex; justify-content: space-between;">-->
     <!--            <div th:text="${expense.title}"></div>-->
