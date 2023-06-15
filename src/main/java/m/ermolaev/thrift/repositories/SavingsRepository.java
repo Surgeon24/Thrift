@@ -44,15 +44,5 @@ public class SavingsRepository {
         System.out.println("Success!\n");
     }
 
-//    public void updateInvestment(Savings investment) {
-//        // Perform the update operation using the provided investment object
-//        // Update the corresponding record in the database based on the investment's ID
-//
-//        // Sample code to update the investment record using JDBC or an ORM framework
-//        String sql = "UPDATE savings SET title = ?, description = ?, amount = ? WHERE id = ?";
-//        jdbcTemplate.update(sql, investment.getTitle(), investment.getDescription(), investment.getAmount(), investment.getId());
-//
-//        // Additional logic if needed
-//    }
 
 }

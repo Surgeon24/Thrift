@@ -17,7 +17,6 @@ public class NotificationService {
         Integer recipient = notification.getRecipient();
         String message = notification.getMessage();
 
-        // Example: Store the notification in a database
         storeNotification(notification);
         logger.info("Storing notification in database");
 

@@ -45,39 +45,6 @@
     <button onclick="redirectToInvestments()"><img th:src="@{/icons/investments.png}" alt="Investments">Investments</button>
     <button onclick="redirectToProfile()"><img th:src="@{/icons/profile.png}" alt="Profile">My Profile</button>
 </div>
-<!--<h1 th:text="${username} + ' investment'"/>-->
-<!--<div th:text="${investment.title}"></div>-->
-<!--<div th:text="${investment.description}"></div>-->
-<!--<div th:text="${investment.amount}"></div>-->
-<!--<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">-->
-<!--    <div>-->
-<!--        <input type="submit" value="Save changes">-->
-<!--    </div>-->
-<!--</form>-->
-
-
-<!--<div>-->
-<!--    <h1>Title:</h1>-->
-<!--    <input type="text" th:value="${investment.title}" />-->
-<!--</div>-->
-<!--<div>-->
-<!--    <h1>Description:</h1>-->
-<!--    <textarea th:value="${investment.description}"></textarea>-->
-<!--</div>-->
-<!--<div>-->
-<!--    <h1>Amount:</h1>-->
-<!--    <input type="number" th:value="${investment.amount}" />-->
-<!--</div>-->
-<!--<form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">-->
-<!--    <div>-->
-<!--        <input type="hidden" name="existingTitle" th:value="${investment.title}" />-->
-<!--        <input type="hidden" name="existingDescription" th:value="${investment.description}" />-->
-<!--        <input type="hidden" name="existingAmount" th:value="${investment.amount}" />-->
-<!--        <input type="submit" value="Save changes" />-->
-<!--    </div>-->
-<!--</form>-->
-
-
 <form th:action="@{'/' + ${username} + '/investment/' + ${investment.id}}" method="POST">
     <div>
         <label for="title">Title:</label>
