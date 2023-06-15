@@ -3,6 +3,7 @@ package m.ermolaev.thrift.repositories;
 import m.ermolaev.thrift.domain.Group;
 import m.ermolaev.thrift.domain.User;
 import m.ermolaev.thrift.domain.Wallet;
+import m.ermolaev.thrift.domain.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -81,13 +82,18 @@ public class UserRepository {
                     BeanPropertyRowMapper.newInstance(Group.class));
     }
 
-        public List<Wallet> getAllWallets(String nickname){
-            User user = getUser(nickname);
-            return jdbcTemplate.query("SELECT * FROM wallet WHERE wallet.user_id = ?",
-                    new Object[]{user.getId()},
-                    BeanPropertyRowMapper.newInstance(Wallet.class));
+    public List<Wallet> getAllWallets(String nickname){
+        User user = getUser(nickname);
+        return jdbcTemplate.query("SELECT * FROM wallet WHERE wallet.user_id = ?",
+                new Object[]{user.getId()},
+                BeanPropertyRowMapper.newInstance(Wallet.class));
     }
 
 
+    public List<Notification> getNotifications(int id){
+        return jdbcTemplate.query("SELECT * FROM notifications WHERE recipient = ?",
+                new Object[]{id},
+                BeanPropertyRowMapper.newInstance(Notification.class));
+    }
 
 }

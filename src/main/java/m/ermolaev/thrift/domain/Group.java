@@ -15,4 +15,11 @@ public class Group {
     private String description;
     private Timestamp created_at;
     private String code;
+
+    public int getId() {
+        return id;
+    }
+    public String getTitle(){
+        return title;
+    }
 }

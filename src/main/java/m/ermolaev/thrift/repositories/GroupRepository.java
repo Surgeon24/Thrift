@@ -1,5 +1,6 @@
 package m.ermolaev.thrift.repositories;
 
+import m.ermolaev.thrift.domain.Group;
 import m.ermolaev.thrift.domain.Group_expense;
 import m.ermolaev.thrift.domain.Wallet_expense;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +103,16 @@ public class GroupRepository {
     public String getCode(int id){
         return jdbcTemplate.queryForObject("SELECT code FROM group_table WHERE id = ?",
                 new Object[]{id}, String.class);
+    }
+
+    public Group getGroupByCode(String code){
+        return jdbcTemplate.queryForObject("SELECT id, title, code FROM group_table WHERE code = ?",
+                new Object[]{code}, new BeanPropertyRowMapper<>(Group.class));
+    }
+
+
+    public List<Integer> getAllParticipants(int id){
+        return jdbcTemplate.queryForList("SELECT user_id FROM group_user WHERE group_id = ?",
+                new Object[]{id}, Integer.class);
     }
 }
